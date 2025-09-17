@@ -28,6 +28,7 @@ export default function ScanResultPage() {
               Analysis for: <span className="font-semibold text-indigo-700 break-all">{decodedUrl}</span>
             </p>
           </div>
+          
 
           {/* Loading State */}
           {loading && (
