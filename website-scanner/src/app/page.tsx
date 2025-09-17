@@ -2,14 +2,10 @@
 
 import { useState } from 'react';
 import { Loader2, Globe, Code, FileText, Palette } from 'lucide-react';
-
-interface ScanResult {
-  htmlLength: number;
-  cssLength: number;
-  stylesheets: number;
-  inlineBlocks: number;
-  snippet: string;
-}
+import { ScanResult } from '@/types';
+import ErrorMessage from '@/components/ErrorMessage';
+import ScanResultCard from '@/components/ScanResultCard';
+import ScanResultsDisplay from '@/components/ScanResultsDisplay';
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -106,18 +102,7 @@ export default function Home() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm text-red-800">{error}</p>
-                </div>
-              </div>
-            </div>
+            <ErrorMessage error={error} />
           )}
 
           {/* Results */}
@@ -125,66 +110,33 @@ export default function Home() {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex items-center">
-                    <FileText className="w-8 h-8 text-blue-500" />
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">HTML Size</p>
-                      <p className="text-2xl font-bold text-gray-900">
-                        {(result.htmlLength / 1024).toFixed(1)}KB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex items-center">
-                    <Palette className="w-8 h-8 text-purple-500" />
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">CSS Size</p>
-                      <p className="text-2xl font-bold text-gray-900">
-                        {(result.cssLength / 1024).toFixed(1)}KB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex items-center">
-                    <Code className="w-8 h-8 text-green-500" />
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">Stylesheets</p>
-                      <p className="text-2xl font-bold text-gray-900">{result.stylesheets}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex items-center">
-                    <FileText className="w-8 h-8 text-orange-500" />
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600">Inline Blocks</p>
-                      <p className="text-2xl font-bold text-gray-900">{result.inlineBlocks}</p>
-                    </div>
-                  </div>
-                </div>
+                <ScanResultCard
+                  icon={FileText}
+                  label="HTML Size"
+                  value={`${(result.htmlLength / 1024).toFixed(1)}KB`}
+                  color="text-blue-500"
+                />
+                <ScanResultCard
+                  icon={Palette}
+                  label="CSS Size"
+                  value={`${(result.cssLength / 1024).toFixed(1)}KB`}
+                  color="text-purple-500"
+                />
+                <ScanResultCard
+                  icon={Code}
+                  label="Stylesheets"
+                  value={result.stylesheets}
+                  color="text-green-500"
+                />
+                <ScanResultCard
+                  icon={FileText}
+                  label="Inline Blocks"
+                  value={result.inlineBlocks}
+                  color="text-orange-500"
+                />
               </div>
 
-              {/* JSON Output */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Scan Results (JSON)</h3>
-                <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm">
-                  <code>{JSON.stringify(result, null, 2)}</code>
-                </pre>
-              </div>
-
-              {/* HTML Snippet */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">HTML Preview (First 400 chars)</h3>
-                <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm">
-                  <code className="text-blue-600">{result.snippet}</code>
-                </pre>
-              </div>
+              <ScanResultsDisplay result={result} />
             </div>
           )}
         </div>
