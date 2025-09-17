@@ -100,6 +100,7 @@ export async function GET(request: NextRequest) {
       inlineBlocks: inlineStyles.length,
       snippet: html.substring(0, 400),
       cssSnippet: allCss.substring(0, 400),
+      cssSnippet: allCss.substring(0, 400),
     };
 
     return NextResponse.json(result);

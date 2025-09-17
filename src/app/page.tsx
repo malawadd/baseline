@@ -1,42 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { Loader2, Globe, Code, FileText, Palette } from 'lucide-react';
-import { ScanResult } from '@/types';
-import ErrorMessage from '@/components/ErrorMessage';
-import ScanResultCard from '@/components/ScanResultCard';
-import ScanResultsDisplay from '@/components/ScanResultsDisplay';
+import { useRouter } from 'next/navigation';
+import { Loader2, Globe } from 'lucide-react';
 
 export default function Home() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<ScanResult | null>(null);
-  const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleScan = async () => {
     if (!url.trim()) {
-      setError('Please enter a URL');
+      alert('Please enter a URL');
       return;
     }
 
     setLoading(true);
-    setError('');
-    setResult(null);
 
-    try {
-      const response = await fetch(`/api/scan?url=${encodeURIComponent(url.trim())}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Scan failed');
-      }
-
-      setResult(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
-    } finally {
-      setLoading(false);
-    }
+    
+    // Navigate to the scan results page
+    const encodedUrl = encodeURIComponent(url.trim());
+    router.push(`/scan/${encodedUrl}`);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -100,45 +84,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Error Message */}
-          {error && (
-            <ErrorMessage error={error} />
-          )}
 
-          {/* Results */}
-          {result && (
-            <div className="space-y-6">
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <ScanResultCard
-                  icon={FileText}
-                  label="HTML Size"
-                  value={`${(result.htmlLength / 1024).toFixed(1)}KB`}
-                  color="text-blue-500"
-                />
-                <ScanResultCard
-                  icon={Palette}
-                  label="CSS Size"
-                  value={`${(result.cssLength / 1024).toFixed(1)}KB`}
-                  color="text-purple-500"
-                />
-                <ScanResultCard
-                  icon={Code}
-                  label="Stylesheets"
-                  value={result.stylesheets}
-                  color="text-green-500"
-                />
-                <ScanResultCard
-                  icon={FileText}
-                  label="Inline Blocks"
-                  value={result.inlineBlocks}
-                  color="text-orange-500"
-                />
-              </div>
-
-              <ScanResultsDisplay result={result} />
-            </div>
-          )}
         </div>
       </div>
     </div>
