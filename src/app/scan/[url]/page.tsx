@@ -6,6 +6,7 @@ import { Loader2, Globe, Code, FileText, Palette } from 'lucide-react';
 import ErrorMessage from '@/components/ErrorMessage';
 import ScanResultCard from '@/components/ScanResultCard';
 import ScanResultsDisplay from '@/components/ScanResultsDisplay';
+import UrlScanInput from '@/components/UrlScanInput';
 
 export default function ScanResultPage() {
   const params = useParams();
@@ -25,11 +26,13 @@ export default function ScanResultPage() {
               <h1 className="text-4xl font-bold text-gray-800">Scan Results</h1>
             </div>
             <p className="text-gray-600 text-lg">
-              Analysis for: <span className="font-semibold text-indigo-700 break-all">{decodedUrl}</span>
+              Website analysis and scanning tool
             </p>
           </div>
-          
 
+          {/* URL Scan Input Section with Current URL */}
+          <UrlScanInput currentUrl={decodedUrl} showCurrentUrl={true} />
+          
           {/* Loading State */}
           {loading && (
             <div className="flex justify-center items-center py-10">
