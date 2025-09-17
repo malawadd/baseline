@@ -10,7 +10,7 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
       {/* JSON Output */}
       <div className="bg-white rounded-lg shadow p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Scan Results (JSON)</h3>
-        <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm">
+        <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm text-red-700">
           <code>{JSON.stringify(result, null, 2)}</code>
         </pre>
       </div>

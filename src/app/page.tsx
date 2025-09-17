@@ -74,7 +74,7 @@ export default function Home() {
                   onChange={(e) => setUrl(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="https://example.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors"
+                  className="text-gray-700 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors"
                   disabled={loading}
                 />
               </div>
