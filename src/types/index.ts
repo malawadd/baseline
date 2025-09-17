@@ -5,5 +5,4 @@ export interface ScanResult {
   inlineBlocks: number;
   snippet: string;
   cssSnippet: string;
-  cssSnippet: string;
 }
