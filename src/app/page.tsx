@@ -56,7 +56,7 @@ export default function Home() {
               <h1 className="text-4xl font-bold text-gray-800">Website Scanner</h1>
             </div>
             <p className="text-gray-600 text-lg">
-              Analyze any website's HTML and CSS content
+              Analyze any website&apos;s HTML and CSS content
             </p>
           </div>
 
