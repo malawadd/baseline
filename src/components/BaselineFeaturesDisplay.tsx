@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaselineFeature } from '@/types';
-import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, Info, Search, Filter } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, Info, Search, ListFilter as Filter } from 'lucide-react';
 
 interface BaselineFeaturesDisplayProps {
   features: BaselineFeature[];
