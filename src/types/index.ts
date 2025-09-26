@@ -7,6 +7,7 @@ export interface ScanResult {
   cssSnippet: string;
   baselineFeatures: BaselineFeature[];
   highlightedHtmlContent: string;
+  baselineSummary: BaselineSummary;
 }
 
 export interface BaselineFeature {
@@ -15,4 +16,11 @@ export interface BaselineFeature {
   description?: string;
   selector?: string;
   highlightClass?: string;
+}
+
+export interface BaselineSummary {
+  widelyAvailable: number;
+  newlyAvailable: number;
+  limitedAvailability: number;
+  total: number;
 }

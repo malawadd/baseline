@@ -4,6 +4,7 @@ import { ScanResult } from '@/types';
 import { fetchStylesheet } from '@/lib/utils';
 import { detectBaselineFeatures } from '@/lib/baselineDetector';
 import { highlightHtmlFeatures } from '@/lib/htmlHighlighter';
+import { computeBaselineSummary } from '@/lib/baselineSummary';
 
 export async function GET(request: NextRequest) {
   try {
@@ -100,6 +101,9 @@ export async function GET(request: NextRequest) {
     // Highlight HTML features
     const highlightedHtmlContent = highlightHtmlFeatures(html, baselineFeatures);
 
+    // Compute baseline summary
+    const baselineSummary = computeBaselineSummary(baselineFeatures);
+
     // Prepare result
     const result: ScanResult = {
       htmlLength: Buffer.byteLength(html, 'utf8'),
@@ -110,6 +114,7 @@ export async function GET(request: NextRequest) {
       cssSnippet: allCss.substring(0, 400),
       baselineFeatures,
       highlightedHtmlContent,
+      baselineSummary,
     };
 
     return NextResponse.json(result);

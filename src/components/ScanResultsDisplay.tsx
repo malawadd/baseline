@@ -1,6 +1,7 @@
 import { ScanResult } from '@/types';
 import BaselineFeaturesDisplay from './BaselineFeaturesDisplay';
 import HighlightedHtmlDisplay from './HighlightedHtmlDisplay';
+import BaselineSummaryCard from './BaselineSummaryCard';
 
 interface ScanResultsDisplayProps {
   result: ScanResult;
@@ -9,6 +10,9 @@ interface ScanResultsDisplayProps {
 export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) {
   return (
     <div className="space-y-6">
+      {/* Baseline Summary */}
+      <BaselineSummaryCard summary={result.baselineSummary} />
+
       {/* Baseline Features */}
       <BaselineFeaturesDisplay features={result.baselineFeatures} />
 
