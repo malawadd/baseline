@@ -173,10 +173,10 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
       <div className="mb-4 text-sm text-gray-600">
         Showing {filteredFeatures.length} of {features.length} features
         {searchTerm && (
-          <span> matching "{searchTerm}"</span>
+          <span> matching &ldquo;{searchTerm}&rdquo;</span>
         )}
         {selectedStatusFilter !== 'all' && (
-          <span> with status "{selectedStatusFilter}"</span>
+          <span> with status &ldquo;{selectedStatusFilter}&rdquo;</span>
         )}
       </div>
 
