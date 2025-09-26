@@ -63,113 +63,6 @@ const HTML_FEATURES = [
   { selector: '[decoding="async"]', name: 'async-decoding', featureKey: 'async-decoding' },
 ];
 
-// CSS properties to detect
-const CSS_FEATURES: Array<{ pattern: RegExp; name: string }> = [
-  { pattern: /display:\s*grid/i, name: 'css-grid' },
-  { pattern: /display:\s*flex/i, name: 'flexbox' },
-  { pattern: /gap:/i, name: 'css-gap' },
-  { pattern: /grid-template/i, name: 'css-grid' },
-  { pattern: /transform:/i, name: 'css-transforms' },
-  { pattern: /transition:/i, name: 'css-transitions' },
-  { pattern: /animation:/i, name: 'css-animations' },
-  { pattern: /@media.*prefers-color-scheme/i, name: 'prefers-color-scheme' },
-  { pattern: /position:\s*sticky/i, name: 'css-sticky' },
-  { pattern: /backdrop-filter:/i, name: 'css-backdrop-filter' },
-  { pattern: /scroll-snap/i, name: 'css-scroll-snap' },
-  // Layout & Positioning
-  { pattern: /display:\s*inline-flex/i, name: 'flexbox' },
-  { pattern: /display:\s*inline-grid/i, name: 'css-grid' },
-  { pattern: /position:\s*fixed/i, name: 'css-position-fixed' },
-  { pattern: /position:\s*absolute/i, name: 'css-position-absolute' },
-  { pattern: /position:\s*relative/i, name: 'css-position-relative' },
-  { pattern: /z-index:/i, name: 'css-z-index' },
-  { pattern: /flex-direction:/i, name: 'flexbox' },
-  { pattern: /flex-wrap:/i, name: 'flexbox' },
-  { pattern: /justify-content:/i, name: 'flexbox' },
-  { pattern: /align-items:/i, name: 'flexbox' },
-  { pattern: /align-self:/i, name: 'flexbox' },
-  { pattern: /grid-area:/i, name: 'css-grid' },
-  { pattern: /grid-column:/i, name: 'css-grid' },
-  { pattern: /grid-row:/i, name: 'css-grid' },
-  { pattern: /place-items:/i, name: 'css-grid' },
-  { pattern: /place-content:/i, name: 'css-grid' },
-  // Modern CSS Properties
-  { pattern: /border-radius:/i, name: 'css-border-radius' },
-  { pattern: /box-shadow:/i, name: 'css-box-shadow' },
-  { pattern: /text-shadow:/i, name: 'css-text-shadow' },
-  { pattern: /linear-gradient/i, name: 'css-gradients' },
-  { pattern: /radial-gradient/i, name: 'css-gradients' },
-  { pattern: /conic-gradient/i, name: 'css-gradients' },
-  { pattern: /rgba\(/i, name: 'css-rgba' },
-  { pattern: /hsla\(/i, name: 'css-hsla' },
-  { pattern: /var\(/i, name: 'css-custom-properties' },
-  { pattern: /calc\(/i, name: 'css-calc' },
-  { pattern: /clamp\(/i, name: 'css-clamp' },
-  { pattern: /min\(/i, name: 'css-min-max' },
-  { pattern: /max\(/i, name: 'css-min-max' },
-  // Typography
-  { pattern: /@font-face/i, name: 'css-font-face' },
-  { pattern: /font-display:/i, name: 'css-font-display' },
-  { pattern: /font-variation-settings:/i, name: 'css-variable-fonts' },
-  { pattern: /text-decoration-color:/i, name: 'css-text-decoration-color' },
-  { pattern: /text-decoration-style:/i, name: 'css-text-decoration-style' },
-  { pattern: /text-decoration-thickness:/i, name: 'css-text-decoration-thickness' },
-  { pattern: /text-underline-offset:/i, name: 'css-text-underline-offset' },
-  { pattern: /line-height-step:/i, name: 'css-line-height-step' },
-  // Responsive & Media Queries
-  { pattern: /@media.*min-width/i, name: 'css-media-queries' },
-  { pattern: /@media.*max-width/i, name: 'css-media-queries' },
-  { pattern: /@media.*orientation/i, name: 'css-media-queries' },
-  { pattern: /@media.*prefers-reduced-motion/i, name: 'prefers-reduced-motion' },
-  { pattern: /@media.*prefers-contrast/i, name: 'prefers-contrast' },
-  { pattern: /vw|vh|vmin|vmax/i, name: 'css-viewport-units' },
-  { pattern: /rem|em/i, name: 'css-relative-units' },
-  // Animations & Transitions
-  { pattern: /@keyframes/i, name: 'css-animations' },
-  { pattern: /animation-name:/i, name: 'css-animations' },
-  { pattern: /animation-duration:/i, name: 'css-animations' },
-  { pattern: /animation-timing-function:/i, name: 'css-animations' },
-  { pattern: /transition-property:/i, name: 'css-transitions' },
-  { pattern: /transition-duration:/i, name: 'css-transitions' },
-  { pattern: /transition-timing-function:/i, name: 'css-transitions' },
-  { pattern: /ease-in-out|ease-in|ease-out/i, name: 'css-easing-functions' },
-  { pattern: /cubic-bezier/i, name: 'css-cubic-bezier' },
-  // Visual Effects
-  { pattern: /filter:/i, name: 'css-filters' },
-  { pattern: /blur\(/i, name: 'css-filters' },
-  { pattern: /brightness\(/i, name: 'css-filters' },
-  { pattern: /contrast\(/i, name: 'css-filters' },
-  { pattern: /saturate\(/i, name: 'css-filters' },
-  { pattern: /opacity:/i, name: 'css-opacity' },
-  { pattern: /mix-blend-mode:/i, name: 'css-blend-modes' },
-  { pattern: /background-blend-mode:/i, name: 'css-blend-modes' },
-  { pattern: /clip-path:/i, name: 'css-clip-path' },
-  { pattern: /mask:/i, name: 'css-masks' },
-  // Container Queries & Modern Layout
-  { pattern: /@container/i, name: 'css-container-queries' },
-  { pattern: /container-type:/i, name: 'css-container-queries' },
-  { pattern: /container-name:/i, name: 'css-container-queries' },
-  { pattern: /aspect-ratio:/i, name: 'css-aspect-ratio' },
-  { pattern: /object-fit:/i, name: 'css-object-fit' },
-  { pattern: /object-position:/i, name: 'css-object-position' },
-  // Scroll & Interaction
-  { pattern: /scroll-behavior:/i, name: 'css-scroll-behavior' },
-  { pattern: /scroll-margin/i, name: 'css-scroll-margin' },
-  { pattern: /scroll-padding/i, name: 'css-scroll-padding' },
-  { pattern: /overscroll-behavior:/i, name: 'css-overscroll-behavior' },
-  { pattern: /touch-action:/i, name: 'css-touch-action' },
-  { pattern: /user-select:/i, name: 'css-user-select' },
-  { pattern: /pointer-events:/i, name: 'css-pointer-events' },
-  // CSS Logical Properties
-  { pattern: /margin-inline/i, name: 'css-logical-properties' },
-  { pattern: /margin-block/i, name: 'css-logical-properties' },
-  { pattern: /padding-inline/i, name: 'css-logical-properties' },
-  { pattern: /padding-block/i, name: 'css-logical-properties' },
-  { pattern: /border-inline/i, name: 'css-logical-properties' },
-  { pattern: /border-block/i, name: 'css-logical-properties' },
-  { pattern: /inset-inline/i, name: 'css-logical-properties' },
-  { pattern: /inset-block/i, name: 'css-logical-properties' },
-];
 
 function detectHtmlFeatures(html: string): BaselineFeature[] {
   const $ = cheerio.load(html);
@@ -190,16 +83,163 @@ function detectHtmlFeatures(html: string): BaselineFeature[] {
   return detectedFeatures;
 }
 
-function detectCssFeatures(css: string): Set<string> {
-  const detectedFeatures = new Set<string>();
+function detectCssFeatures(css: string): BaselineFeature[] {
+  const detectedFeatures: BaselineFeature[] = [];
+  const seenBcdKeys = new Set<string>();
 
-  CSS_FEATURES.forEach(({ pattern, name }) => {
-    if (pattern.test(css)) {
-      detectedFeatures.add(name);
-    }
-  });
+  if (!css.trim()) {
+    return detectedFeatures;
+  }
+
+  try {
+    // Parse CSS into AST
+    const ast = csstree.parse(css, {
+      onParseError: () => {
+        // Ignore parse errors and continue with what we can parse
+      }
+    });
+
+    // Walk through the AST to find declarations
+    csstree.walk(ast, (node) => {
+      if (node.type === 'Declaration') {
+        const property = node.property;
+        
+        // Construct BCD key for the property
+        const propertyBcdKey = `css.properties.${property}`;
+        
+        // Check property-level baseline status
+        if (!seenBcdKeys.has(propertyBcdKey)) {
+          try {
+            const propertyStatus = getStatus(null, propertyBcdKey);
+            if (propertyStatus) {
+              const baselineFeature = convertComputeBaselineToFeature(propertyBcdKey, propertyStatus);
+              if (baselineFeature) {
+                detectedFeatures.push(baselineFeature);
+                seenBcdKeys.add(propertyBcdKey);
+              }
+            }
+          } catch (error) {
+            // BCD key doesn't exist, skip silently
+          }
+        }
+
+        // Check property-value pairs for specific values
+        if (node.value && node.value.children) {
+          csstree.walk(node.value, (valueNode) => {
+            if (valueNode.type === 'Identifier') {
+              const value = valueNode.name;
+              const propertyValueBcdKey = `${propertyBcdKey}.${value}`;
+              
+              if (!seenBcdKeys.has(propertyValueBcdKey)) {
+                try {
+                  const valueStatus = getStatus(null, propertyValueBcdKey);
+                  if (valueStatus) {
+                    const baselineFeature = convertComputeBaselineToFeature(propertyValueBcdKey, propertyStatus);
+                    if (baselineFeature) {
+                      detectedFeatures.push(baselineFeature);
+                      seenBcdKeys.add(propertyValueBcdKey);
+                    }
+                  }
+                } catch (error) {
+                  // BCD key doesn't exist, skip silently
+                }
+              }
+            }
+          });
+        }
+      }
+
+      // Handle at-rules like @media, @keyframes, @container
+      if (node.type === 'Atrule') {
+        const atRuleName = node.name;
+        const atRuleBcdKey = `css.at-rules.${atRuleName}`;
+        
+        if (!seenBcdKeys.has(atRuleBcdKey)) {
+          try {
+            const atRuleStatus = getStatus(null, atRuleBcdKey);
+            if (atRuleStatus) {
+              const baselineFeature = convertComputeBaselineToFeature(atRuleBcdKey, atRuleStatus);
+              if (baselineFeature) {
+                detectedFeatures.push(baselineFeature);
+                seenBcdKeys.add(atRuleBcdKey);
+              }
+            }
+          } catch (error) {
+            // BCD key doesn't exist, skip silently
+          }
+        }
+      }
+
+      // Handle pseudo-classes and pseudo-elements
+      if (node.type === 'PseudoClassSelector' || node.type === 'PseudoElementSelector') {
+        const pseudoName = node.name;
+        const pseudoType = node.type === 'PseudoClassSelector' ? 'pseudo-classes' : 'pseudo-elements';
+        const pseudoBcdKey = `css.selectors.${pseudoType}.${pseudoName}`;
+        
+        if (!seenBcdKeys.has(pseudoBcdKey)) {
+          try {
+            const pseudoStatus = getStatus(null, pseudoBcdKey);
+            if (pseudoStatus) {
+              const baselineFeature = convertComputeBaselineToFeature(pseudoBcdKey, pseudoStatus);
+              if (baselineFeature) {
+                detectedFeatures.push(baselineFeature);
+                seenBcdKeys.add(pseudoBcdKey);
+              }
+            }
+          } catch (error) {
+            // BCD key doesn't exist, skip silently
+          }
+        }
+      }
+    });
+
+  } catch (error) {
+    console.warn('CSS parsing failed:', error);
+    // Return empty array if parsing completely fails
+    return [];
+  }
 
   return detectedFeatures;
+}
+
+// Helper function to convert compute-baseline output to our BaselineFeature format
+function convertComputeBaselineToFeature(bcdKey: string, status: any): BaselineFeature | null {
+  if (!status || !status.baseline) {
+    return null;
+  }
+
+  let baselineStatus = 'Unknown';
+  let highlightClass = '';
+  
+  if (status.baseline === 'high') {
+    baselineStatus = 'Widely available';
+    highlightClass = 'highlight-widely-available';
+  } else if (status.baseline === 'low') {
+    baselineStatus = 'Newly available';
+    highlightClass = 'highlight-newly-available';
+  } else if (status.baseline === false) {
+    baselineStatus = 'Limited availability';
+    highlightClass = 'highlight-limited-availability';
+  }
+
+  // Create a human-readable name from the BCD key
+  const name = bcdKey.split('.').pop() || bcdKey;
+  
+  return {
+    name: formatFeatureName(name),
+    status: baselineStatus,
+    description: `CSS feature: ${bcdKey}`,
+    highlightClass,
+  };
+}
+
+// Helper function to format feature names for better readability
+function formatFeatureName(name: string): string {
+  return name
+    .replace(/-/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .toLowerCase()
+    .replace(/^./, str => str.toUpperCase());
 }
 
 function getBaselineStatus(featureName: string): Omit<BaselineFeature, 'selector'> | null {
@@ -232,33 +272,17 @@ export function detectBaselineFeatures(html: string, css: string): BaselineFeatu
   const htmlFeatures = detectHtmlFeatures(html);
   const cssFeatures = detectCssFeatures(css);
   
-  // Combine HTML features (with selectors) and CSS features (without selectors)
-  const cssBaselineFeatures: BaselineFeature[] = [];
-  cssFeatures.forEach(featureName => {
-    const baselineInfo = getBaselineStatus(featureName);
-    if (baselineInfo) {
-      cssBaselineFeatures.push(baselineInfo);
-    }
-  });
-  
-  const baselineFeatures: BaselineFeature[] = [];
+  // Combine HTML and CSS features, removing duplicates
+  const allFeatures: BaselineFeature[] = [...htmlFeatures, ...cssFeatures];
   const seenFeatures = new Set<string>();
+  const uniqueFeatures: BaselineFeature[] = [];
 
-  // Add HTML features
-  htmlFeatures.forEach(feature => {
+  allFeatures.forEach(feature => {
     if (!seenFeatures.has(feature.name)) {
-      baselineFeatures.push(feature);
+      uniqueFeatures.push(feature);
       seenFeatures.add(feature.name);
     }
   });
 
-  // Add CSS features
-  cssBaselineFeatures.forEach(feature => {
-    if (!seenFeatures.has(feature.name)) {
-      baselineFeatures.push(feature);
-      seenFeatures.add(feature.name);
-    }
-  });
-
-  return baselineFeatures.sort((a, b) => a.name.localeCompare(b.name));
+  return uniqueFeatures.sort((a, b) => a.name.localeCompare(b.name));
 }

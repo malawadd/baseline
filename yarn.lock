@@ -183,6 +183,18 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@js-temporal/polyfill@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@js-temporal/polyfill/-/polyfill-0.5.1.tgz"
+  integrity sha512-hloP58zRVCRSpgDxmqCWJNlizAlUgJFqG2ypq79DCvyv9tHjRYMDOcPFjzfl/A1/YxDvRCZz8wvZvmapQnKwFQ==
+  dependencies:
+    jsbi "^4.3.0"
+
+"@mdn/browser-compat-data@^7.0.0":
+  version "7.1.7"
+  resolved "https://registry.npmjs.org/@mdn/browser-compat-data/-/browser-compat-data-7.1.7.tgz"
+  integrity sha512-bpWZ7hidvjrwNWcMngZ8nTMTxn8WhnQntsGqEYgPr1vjy66kfwfDVizwXg6PvsgoANZ7nhuRBmvzjpCMk4ITDw==
+
 "@next/env@15.5.3":
   version "15.5.3"
   resolved "https://registry.npmjs.org/@next/env/-/env-15.5.3.tgz"
@@ -757,6 +769,19 @@ color@^4.2.3:
     color-convert "^2.0.1"
     color-string "^1.9.0"
 
+compare-versions@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.npmjs.org/compare-versions/-/compare-versions-6.1.1.tgz"
+  integrity sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==
+
+compute-baseline@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/compute-baseline/-/compute-baseline-0.4.0.tgz"
+  integrity sha512-Rpa1BbZZRYR4l1QH0t/sBfOMQTI6ICMSTWMhGQKlrRcoOJmEM7bftwlz1pGcKue5C7LEITwB4kwXAQdq7Ht8XA==
+  dependencies:
+    "@js-temporal/polyfill" "^0.5.1"
+    compare-versions "^6.1.1"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
@@ -786,6 +811,13 @@ css-what@^6.1.0:
   version "6.2.2"
   resolved "https://registry.npmjs.org/css-what/-/css-what-6.2.2.tgz"
   integrity sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==
+
+csstree@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/csstree/-/csstree-0.0.3.tgz"
+  integrity sha512-xs+bw0WIYtl88NrtDMS8QNTSCxYXmIpuuR9Fq/o/8T+CMm0ONxQIUS7liXcWoqZlCBXiNf4YOXHcXvAXyYVY7g==
+  dependencies:
+    string-iterator "0.0.1"
 
 csstype@^3.0.2:
   version "3.1.3"
@@ -1805,6 +1837,11 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
+jsbi@^4.3.0:
+  version "4.3.2"
+  resolved "https://registry.npmjs.org/jsbi/-/jsbi-4.3.2.tgz"
+  integrity sha512-9fqMSQbhJykSeii05nxKl4m6Eqn2P6rOlYiS+C5Dr/HPIU/7yZxu5qzbs40tgaFORiw2Amd0mirjxatXYMkIew==
+
 json-buffer@3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/json-buffer/-/json-buffer-3.0.1.tgz"
@@ -2502,6 +2539,11 @@ stop-iteration-iterator@^1.1.0:
   dependencies:
     es-errors "^1.3.0"
     internal-slot "^1.1.0"
+
+string-iterator@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/string-iterator/-/string-iterator-0.0.1.tgz"
+  integrity sha512-XCUPs7nuLZ+FblEzY8CsrZ+7oAMPE4sroxEtd/K7mngI34+jJ5bBd2Uilxbt3ivPTNB46nxW9P8Zdff3Vw3/Lw==
 
 string.prototype.includes@^2.0.1:
   version "2.0.1"
