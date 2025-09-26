@@ -1,5 +1,7 @@
 import { features } from 'web-features';
 import * as cheerio from 'cheerio';
+import * as csstree from 'css-tree';
+import { getStatus } from 'compute-baseline';
 import { BaselineFeature } from '@/types';
 
 // Type guard to check if feature is FeatureData (has status property)
