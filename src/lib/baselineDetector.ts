@@ -1,12 +1,43 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { features } from 'web-features';
 import * as cheerio from 'cheerio';
+//@ts-ignore
 import * as csstree from 'css-tree';
 import { getStatus } from 'compute-baseline';
 import { BaselineFeature } from '@/types';
 
+// Define interfaces for better type safety
+interface FeatureData {
+  status?: { baseline?: string | boolean };
+  name?: string;
+  description_html?: string;
+  description?: string;
+}
+
+// Update interface to match the actual SupportStatus type from compute-baseline
+interface ComputeBaselineStatus {
+  baseline?: string | boolean | null;
+  baseline_low_date?: string;
+  baseline_high_date?: string;
+  support?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+// Type for CSS AST nodes
+interface CSSNode {
+  type: string;
+  property?: string;
+  value?: {
+    children?: unknown;
+  };
+  name?: string;
+  [key: string]: unknown;
+}
+
 // Type guard to check if feature is FeatureData (has status property)
-function isFeatureData(feature: any): feature is { status?: { baseline?: string | boolean }; name?: string; description_html?: string; description?: string } {
-  return feature && typeof feature === 'object' && 'status' in feature;
+function isFeatureData(feature: unknown): feature is FeatureData {
+  return feature !== null && typeof feature === 'object' && feature !== undefined && 'status' in feature;
 }
 
 // HTML elements to detect
@@ -70,7 +101,7 @@ function detectHtmlFeatures(html: string): BaselineFeature[] {
   const $ = cheerio.load(html);
   const detectedFeatures: BaselineFeature[] = [];
 
-  HTML_FEATURES.forEach(({ selector, name, featureKey }) => {
+  HTML_FEATURES.forEach(({ selector, featureKey }) => {
     if ($(selector).length > 0) {
       const baselineInfo = getBaselineStatus(featureKey);
       if (baselineInfo) {
@@ -102,7 +133,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
     });
 
     // Walk through the AST to find declarations
-    csstree.walk(ast, (node) => {
+    csstree.walk(ast, (node: CSSNode) => {
       if (node.type === 'Declaration') {
         const property = node.property;
         
@@ -112,7 +143,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
         // Check property-level baseline status
         if (!seenBcdKeys.has(propertyBcdKey)) {
           try {
-            const propertyStatus = getStatus(null, propertyBcdKey);
+            const propertyStatus = getStatus('', propertyBcdKey) as ComputeBaselineStatus;
             if (propertyStatus) {
               const baselineFeature = convertComputeBaselineToFeature(propertyBcdKey, propertyStatus);
               if (baselineFeature) {
@@ -120,29 +151,29 @@ function detectCssFeatures(css: string): BaselineFeature[] {
                 seenBcdKeys.add(propertyBcdKey);
               }
             }
-          } catch (error) {
+          } catch {
             // BCD key doesn't exist, skip silently
           }
         }
 
         // Check property-value pairs for specific values
         if (node.value && node.value.children) {
-          csstree.walk(node.value, (valueNode) => {
+          csstree.walk(node.value, (valueNode: CSSNode) => {
             if (valueNode.type === 'Identifier') {
               const value = valueNode.name;
               const propertyValueBcdKey = `${propertyBcdKey}.${value}`;
               
               if (!seenBcdKeys.has(propertyValueBcdKey)) {
                 try {
-                  const valueStatus = getStatus(null, propertyValueBcdKey);
+                  const valueStatus = getStatus('', propertyValueBcdKey) as ComputeBaselineStatus;
                   if (valueStatus) {
-                    const baselineFeature = convertComputeBaselineToFeature(propertyValueBcdKey, propertyStatus);
+                    const baselineFeature = convertComputeBaselineToFeature(propertyValueBcdKey, valueStatus);
                     if (baselineFeature) {
                       detectedFeatures.push(baselineFeature);
                       seenBcdKeys.add(propertyValueBcdKey);
                     }
                   }
-                } catch (error) {
+                } catch {
                   // BCD key doesn't exist, skip silently
                 }
               }
@@ -158,7 +189,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
         
         if (!seenBcdKeys.has(atRuleBcdKey)) {
           try {
-            const atRuleStatus = getStatus(null, atRuleBcdKey);
+            const atRuleStatus = getStatus('', atRuleBcdKey) as ComputeBaselineStatus;
             if (atRuleStatus) {
               const baselineFeature = convertComputeBaselineToFeature(atRuleBcdKey, atRuleStatus);
               if (baselineFeature) {
@@ -166,7 +197,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
                 seenBcdKeys.add(atRuleBcdKey);
               }
             }
-          } catch (error) {
+          } catch {
             // BCD key doesn't exist, skip silently
           }
         }
@@ -180,7 +211,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
         
         if (!seenBcdKeys.has(pseudoBcdKey)) {
           try {
-            const pseudoStatus = getStatus(null, pseudoBcdKey);
+            const pseudoStatus = getStatus('', pseudoBcdKey) as ComputeBaselineStatus;
             if (pseudoStatus) {
               const baselineFeature = convertComputeBaselineToFeature(pseudoBcdKey, pseudoStatus);
               if (baselineFeature) {
@@ -188,7 +219,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
                 seenBcdKeys.add(pseudoBcdKey);
               }
             }
-          } catch (error) {
+          } catch {
             // BCD key doesn't exist, skip silently
           }
         }
@@ -205,7 +236,7 @@ function detectCssFeatures(css: string): BaselineFeature[] {
 }
 
 // Helper function to convert compute-baseline output to our BaselineFeature format
-function convertComputeBaselineToFeature(bcdKey: string, status: any): BaselineFeature | null {
+function convertComputeBaselineToFeature(bcdKey: string, status: ComputeBaselineStatus): BaselineFeature | null {
   if (!status || !status.baseline) {
     return null;
   }
@@ -219,7 +250,8 @@ function convertComputeBaselineToFeature(bcdKey: string, status: any): BaselineF
   } else if (status.baseline === 'low') {
     baselineStatus = 'Newly available';
     highlightClass = 'highlight-newly-available';
-  } else if (status.baseline === false) {
+  } else {
+    // Handle any other cases (including true or other string values)
     baselineStatus = 'Limited availability';
     highlightClass = 'highlight-limited-availability';
   }

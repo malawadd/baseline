@@ -1,10 +1,32 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as cheerio from 'cheerio';
+//@ts-ignore
 import * as csstree from 'css-tree';
 import { getStatus } from 'compute-baseline';
 import { BaselineFeature } from '@/types';
 
+// Define interfaces for better type safety
+interface ComputeBaselineStatus {
+  baseline?: string | boolean | null;
+  baseline_low_date?: string;
+  baseline_high_date?: string;
+  support?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+// Type for CSS AST nodes
+interface CSSNode {
+  type: string;
+  property?: string;
+  value?: {
+    children?: unknown;
+  };
+  name?: string;
+  [key: string]: unknown;
+}
+
 // Helper function to convert compute-baseline output to our BaselineFeature format
-function convertComputeBaselineToFeature(bcdKey: string, status: any): BaselineFeature | null {
+function convertComputeBaselineToFeature(bcdKey: string, status: ComputeBaselineStatus): BaselineFeature | null {
   if (!status || !status.baseline) {
     return null;
   }
@@ -18,7 +40,8 @@ function convertComputeBaselineToFeature(bcdKey: string, status: any): BaselineF
   } else if (status.baseline === 'low') {
     baselineStatus = 'Newly available';
     highlightClass = 'highlight-newly-available';
-  } else if (status.baseline === false) {
+  } else {
+    // Handle any other cases (including true or other string values)
     baselineStatus = 'Limited availability';
     highlightClass = 'highlight-limited-availability';
   }
@@ -65,14 +88,14 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
     });
 
     // Walk through the AST to find declarations
-    csstree.walk(ast, (node) => {
+    csstree.walk(ast, (node: CSSNode) => {
       if (node.type === 'Declaration') {
         const property = node.property;
         
         // Check property-level baseline status
         const propertyBcdKey = `css.properties.${property}`;
         try {
-          const propertyStatus = getStatus(null, propertyBcdKey);
+          const propertyStatus = getStatus('', propertyBcdKey) as ComputeBaselineStatus;
           if (propertyStatus) {
             const baselineFeature = convertComputeBaselineToFeature(propertyBcdKey, propertyStatus);
             if (baselineFeature) {
@@ -82,19 +105,19 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
               }
             }
           }
-        } catch (error) {
+        } catch {
           // BCD key doesn't exist, skip silently
         }
 
         // Check property-value pairs for specific values
         if (node.value && node.value.children) {
-          csstree.walk(node.value, (valueNode) => {
+          csstree.walk(node.value, (valueNode: CSSNode) => {
             if (valueNode.type === 'Identifier') {
               const value = valueNode.name;
               const propertyValueBcdKey = `css.properties.${property}.${value}`;
               
               try {
-                const valueStatus = getStatus(null, propertyValueBcdKey);
+                const valueStatus = getStatus('', propertyValueBcdKey) as ComputeBaselineStatus;
                 if (valueStatus) {
                   const baselineFeature = convertComputeBaselineToFeature(propertyValueBcdKey, valueStatus);
                   if (baselineFeature) {
@@ -104,7 +127,7 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
                     }
                   }
                 }
-              } catch (error) {
+              } catch {
                 // BCD key doesn't exist, skip silently
               }
             }
@@ -118,7 +141,7 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
         const atRuleBcdKey = `css.at-rules.${atRuleName}`;
         
         try {
-          const atRuleStatus = getStatus(null, atRuleBcdKey);
+          const atRuleStatus = getStatus('', atRuleBcdKey) as ComputeBaselineStatus;
           if (atRuleStatus) {
             const baselineFeature = convertComputeBaselineToFeature(atRuleBcdKey, atRuleStatus);
             if (baselineFeature) {
@@ -128,7 +151,7 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
               }
             }
           }
-        } catch (error) {
+        } catch {
           // BCD key doesn't exist, skip silently
         }
       }
@@ -140,7 +163,7 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
         const pseudoBcdKey = `css.selectors.${pseudoType}.${pseudoName}`;
         
         try {
-          const pseudoStatus = getStatus(null, pseudoBcdKey);
+          const pseudoStatus = getStatus('', pseudoBcdKey) as ComputeBaselineStatus;
           if (pseudoStatus) {
             const baselineFeature = convertComputeBaselineToFeature(pseudoBcdKey, pseudoStatus);
             if (baselineFeature) {
@@ -150,7 +173,7 @@ function highlightCssFeatures(cssContent: string, baselineFeatures: BaselineFeat
               }
             }
           }
-        } catch (error) {
+        } catch {
           // BCD key doesn't exist, skip silently
         }
       }
@@ -246,14 +269,14 @@ export function highlightHtmlFeatures(
 
         const appliedClasses = new Set<string>();
 
-        csstree.walk(ast, (node) => {
+        csstree.walk(ast, (node: CSSNode) => {
           if (node.type === 'Declaration') {
             const property = node.property;
             
             // Check property-level baseline status
             const propertyBcdKey = `css.properties.${property}`;
             try {
-              const propertyStatus = getStatus(null, propertyBcdKey);
+              const propertyStatus = getStatus('', propertyBcdKey) as ComputeBaselineStatus;
               if (propertyStatus) {
                 const baselineFeature = convertComputeBaselineToFeature(propertyBcdKey, propertyStatus);
                 if (baselineFeature) {
@@ -263,19 +286,19 @@ export function highlightHtmlFeatures(
                   }
                 }
               }
-            } catch (error) {
+            } catch {
               // BCD key doesn't exist, skip silently
             }
 
             // Check property-value pairs
             if (node.value && node.value.children) {
-              csstree.walk(node.value, (valueNode) => {
+              csstree.walk(node.value, (valueNode: CSSNode) => {
                 if (valueNode.type === 'Identifier') {
                   const value = valueNode.name;
                   const propertyValueBcdKey = `css.properties.${property}.${value}`;
                   
                   try {
-                    const valueStatus = getStatus(null, propertyValueBcdKey);
+                    const valueStatus = getStatus('', propertyValueBcdKey) as ComputeBaselineStatus;
                     if (valueStatus) {
                       const baselineFeature = convertComputeBaselineToFeature(propertyValueBcdKey, valueStatus);
                       if (baselineFeature) {
@@ -285,7 +308,7 @@ export function highlightHtmlFeatures(
                         }
                       }
                     }
-                  } catch (error) {
+                  } catch {
                     // BCD key doesn't exist, skip silently
                   }
                 }
