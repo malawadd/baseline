@@ -5,4 +5,11 @@ export interface ScanResult {
   inlineBlocks: number;
   snippet: string;
   cssSnippet: string;
+  baselineFeatures: BaselineFeature[];
+}
+
+export interface BaselineFeature {
+  name: string;
+  status: string;
+  description?: string;
 }

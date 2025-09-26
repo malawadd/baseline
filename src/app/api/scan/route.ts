@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as cheerio from 'cheerio';
 import { ScanResult } from '@/types';
 import { fetchStylesheet } from '@/lib/utils';
+import { detectBaselineFeatures } from '@/lib/baselineDetector';
 
 export async function GET(request: NextRequest) {
   try {
@@ -92,6 +93,9 @@ export async function GET(request: NextRequest) {
     // Concatenate all CSS
     const allCss = [...inlineStyles, ...linkedStylesheets].join('\n');
 
+    // Detect Baseline features
+    const baselineFeatures = detectBaselineFeatures(html, allCss);
+
     // Prepare result
     const result: ScanResult = {
       htmlLength: Buffer.byteLength(html, 'utf8'),
@@ -100,6 +104,7 @@ export async function GET(request: NextRequest) {
       inlineBlocks: inlineStyles.length,
       snippet: html.substring(0, 400),
       cssSnippet: allCss.substring(0, 400),
+      baselineFeatures,
     };
 
     return NextResponse.json(result);

@@ -1,4 +1,5 @@
 import { ScanResult } from '@/types';
+import BaselineFeaturesDisplay from './BaselineFeaturesDisplay';
 
 interface ScanResultsDisplayProps {
   result: ScanResult;
@@ -7,6 +8,9 @@ interface ScanResultsDisplayProps {
 export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) {
   return (
     <div className="space-y-6">
+      {/* Baseline Features */}
+      <BaselineFeaturesDisplay features={result.baselineFeatures} />
+
       {/* JSON Output */}
       <div className="bg-white rounded-lg shadow p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Scan Results (JSON)</h3>
