@@ -6,10 +6,13 @@ export interface ScanResult {
   snippet: string;
   cssSnippet: string;
   baselineFeatures: BaselineFeature[];
+  highlightedHtmlContent: string;
 }
 
 export interface BaselineFeature {
   name: string;
   status: string;
   description?: string;
+  selector?: string;
+  highlightClass?: string;
 }

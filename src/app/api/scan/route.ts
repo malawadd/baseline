@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import { ScanResult } from '@/types';
 import { fetchStylesheet } from '@/lib/utils';
 import { detectBaselineFeatures } from '@/lib/baselineDetector';
+import { highlightHtmlFeatures } from '@/lib/htmlHighlighter';
 
 export async function GET(request: NextRequest) {
   try {
@@ -96,6 +97,9 @@ export async function GET(request: NextRequest) {
     // Detect Baseline features
     const baselineFeatures = detectBaselineFeatures(html, allCss);
 
+    // Highlight HTML features
+    const highlightedHtmlContent = highlightHtmlFeatures(html, baselineFeatures);
+
     // Prepare result
     const result: ScanResult = {
       htmlLength: Buffer.byteLength(html, 'utf8'),
@@ -105,6 +109,7 @@ export async function GET(request: NextRequest) {
       snippet: html.substring(0, 400),
       cssSnippet: allCss.substring(0, 400),
       baselineFeatures,
+      highlightedHtmlContent,
     };
 
     return NextResponse.json(result);
