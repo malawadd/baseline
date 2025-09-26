@@ -25,6 +25,9 @@ export function highlightHtmlFeatures(
       $(selector).each((_, element) => {
         const $element = $(element);
         
+        // Ensure highlightClass is defined before using it
+        if (!feature.highlightClass) return;
+        
         // Add the highlight class
         const existingClass = $element.attr('class') || '';
         const newClass = existingClass 

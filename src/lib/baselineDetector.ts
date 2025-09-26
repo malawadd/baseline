@@ -2,6 +2,11 @@ import { features } from 'web-features';
 import * as cheerio from 'cheerio';
 import { BaselineFeature } from '@/types';
 
+// Type guard to check if feature is FeatureData (has status property)
+function isFeatureData(feature: any): feature is { status?: { baseline?: string | boolean }; name?: string; description_html?: string; description?: string } {
+  return feature && typeof feature === 'object' && 'status' in feature;
+}
+
 // HTML elements to detect
 const HTML_FEATURES = [
   { selector: 'dialog', name: 'dialog-element', featureKey: 'dialog-element' },
@@ -19,7 +24,7 @@ const HTML_FEATURES = [
 ];
 
 // CSS properties to detect
-const CSS_FEATURES = [
+const CSS_FEATURES: Array<{ pattern: RegExp; name: string }> = [
   { pattern: /display:\s*grid/i, name: 'css-grid' },
   { pattern: /display:\s*flex/i, name: 'flexbox' },
   { pattern: /gap:/i, name: 'css-gap' },
@@ -66,7 +71,7 @@ function detectCssFeatures(css: string): Set<string> {
 
 function getBaselineStatus(featureName: string): Omit<BaselineFeature, 'selector'> | null {
   const feature = features[featureName];
-  if (!feature) return null;
+  if (!feature || !isFeatureData(feature)) return null;
 
   let status = 'Unknown';
   let highlightClass = '';
