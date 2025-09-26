@@ -1,5 +1,5 @@
 import { BaselineFeature } from '@/types';
-import { CheckCircle, AlertCircle, XCircle, Info } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, Info } from 'lucide-react';
 
 interface BaselineFeaturesDisplayProps {
   features: BaselineFeature[];
