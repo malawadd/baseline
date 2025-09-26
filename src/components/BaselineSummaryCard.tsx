@@ -1,5 +1,5 @@
 import { BaselineSummary } from '@/types';
-import { CheckCircle, AlertCircle, XCircle, TrendingUp } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, TrendingUp } from 'lucide-react';
 
 interface BaselineSummaryCardProps {
   summary: BaselineSummary;
