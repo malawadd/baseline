@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BaselineFeature } from '@/types';
+import FeatureDetailModal from './FeatureDetailModal';
 import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, Info, Search, ListFilter as Filter, ChevronDown, ChevronUp, Circle as HelpCircle } from 'lucide-react';
 
 interface BaselineFeaturesDisplayProps {
@@ -108,6 +109,18 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const [selectedFeature, setSelectedFeature] = useState<BaselineFeature | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleFeatureClick = (feature: BaselineFeature) => {
+    setSelectedFeature(feature);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedFeature(null);
+  };
 
   if (features.length === 0) {
     return (
@@ -307,7 +320,8 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
                     {categoryFeatures.map((feature, index) => (
                       <div
                         key={`${category}-${index}`}
-                        className={`p-3 rounded-lg border ${getStatusColor(feature.status)}`}
+                        className={`p-3 rounded-lg border cursor-pointer hover:shadow-md transition-shadow ${getStatusColor(feature.status)}`}
+                        onClick={() => handleFeatureClick(feature)}
                       >
                         <div className="flex items-start gap-3">
                           {getStatusIcon(feature.status)}
@@ -339,6 +353,13 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
           )}
         </>
       )}
+
+      {/* Feature Detail Modal */}
+      <FeatureDetailModal
+        feature={selectedFeature}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }

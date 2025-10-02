@@ -8,6 +8,8 @@ export interface ScanResult {
   baselineFeatures: BaselineFeature[];
   highlightedHtmlContent: string;
   baselineSummary: BaselineSummary;
+  htmlContent?: string;
+  cssContent?: string;
 }
 
 export interface BaselineFeature {

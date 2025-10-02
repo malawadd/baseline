@@ -25,6 +25,132 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Starry Night Syntax Highlighting Styles */
+.starry-night {
+  color: #24292f;
+  background-color: transparent;
+}
+
+.starry-night .pl-c {
+  color: #6e7781;
+}
+
+.starry-night .pl-c1,
+.starry-night .pl-s .pl-v {
+  color: #0550ae;
+}
+
+.starry-night .pl-e,
+.starry-night .pl-en {
+  color: #8250df;
+}
+
+.starry-night .pl-smi,
+.starry-night .pl-s .pl-s1 {
+  color: #24292f;
+}
+
+.starry-night .pl-ent {
+  color: #116329;
+}
+
+.starry-night .pl-k {
+  color: #cf222e;
+}
+
+.starry-night .pl-s,
+.starry-night .pl-pds,
+.starry-night .pl-s .pl-pse .pl-s1,
+.starry-night .pl-sr,
+.starry-night .pl-sr .pl-cce,
+.starry-night .pl-sr .pl-sre,
+.starry-night .pl-sr .pl-sra {
+  color: #0a3069;
+}
+
+.starry-night .pl-v,
+.starry-night .pl-smw {
+  color: #953800;
+}
+
+.starry-night .pl-bu {
+  color: #82071e;
+}
+
+.starry-night .pl-ii {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+
+.starry-night .pl-c2 {
+  color: #f6f8fa;
+  background-color: #cf222e;
+}
+
+.starry-night .pl-sr .pl-cce {
+  font-weight: bold;
+  color: #116329;
+}
+
+.starry-night .pl-ml {
+  color: #3b2300;
+}
+
+.starry-night .pl-mh,
+.starry-night .pl-mh .pl-en,
+.starry-night .pl-ms {
+  font-weight: bold;
+  color: #0550ae;
+}
+
+.starry-night .pl-mi {
+  font-style: italic;
+  color: #24292f;
+}
+
+.starry-night .pl-mb {
+  font-weight: bold;
+  color: #24292f;
+}
+
+.starry-night .pl-md {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+
+.starry-night .pl-mi1 {
+  color: #116329;
+  background-color: #dafbe1;
+}
+
+.starry-night .pl-mc {
+  color: #953800;
+  background-color: #ffd8b5;
+}
+
+.starry-night .pl-mi2 {
+  color: #eaeef2;
+  background-color: #0550ae;
+}
+
+.starry-night .pl-mdr {
+  font-weight: bold;
+  color: #8250df;
+}
+
+.starry-night .pl-ba {
+  color: #57606a;
+}
+
+.starry-night .pl-sg {
+  color: #8c959f;
+}
+
+.starry-night .pl-corl {
+  text-decoration: underline;
+  color: #0a3069;
+}
+
 /* Baseline Feature Highlighting */
 .highlight-widely-available {
   background-color: rgba(34, 197, 94, 0.1) !important;

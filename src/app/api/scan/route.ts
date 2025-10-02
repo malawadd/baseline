@@ -115,6 +115,8 @@ export async function GET(request: NextRequest) {
       baselineFeatures,
       highlightedHtmlContent,
       baselineSummary,
+      htmlContent: html,
+      cssContent: allCss,
     };
 
     return NextResponse.json(result);
