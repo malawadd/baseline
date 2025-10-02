@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // Also, you usually don't need serverComponentsExternalPackages for this case.
   outputFileTracingIncludes: {
     // Match the App Router API route
-    "/api/scan": [
+    "/app/api/scan": [
       "./node_modules/css-tree/lib/data/**",
       "./node_modules/css-tree/package.json",
     ],
