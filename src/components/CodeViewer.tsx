@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createStarryNight } from '@wooorm/starry-night';
+import { toHtml } from 'hast-util-to-html';
 
 interface CodeViewerProps {
   code: string;
@@ -20,8 +21,8 @@ export default function CodeViewer({ code, language, className = '' }: CodeViewe
 
         // Import grammars dynamically
         const [htmlGrammar, cssGrammar] = await Promise.all([
-          import('@wooorm/starry-night/lang/text.html.basic.js'),
-          import('@wooorm/starry-night/lang/source.css.js')
+          import('@wooorm/starry-night/text.html.basic'),
+          import('@wooorm/starry-night/source.css')
         ]);
 
         // Create starry-night instance
@@ -37,7 +38,7 @@ export default function CodeViewer({ code, language, className = '' }: CodeViewe
         const tree = starryNight.highlight(code, scope);
         
         // Convert to HTML string
-        const highlighted = starryNight.toHtml(tree);
+        const highlighted = toHtml(tree);
         
         setHighlightedCode(highlighted);
       } catch (err) {
