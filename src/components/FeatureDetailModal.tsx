@@ -1,4 +1,4 @@
-import { X, ExternalLink, Info, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
+import { X, ExternalLink, Info, CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle } from 'lucide-react';
 import { BaselineFeature } from '@/types';
 
 interface FeatureDetailModalProps {

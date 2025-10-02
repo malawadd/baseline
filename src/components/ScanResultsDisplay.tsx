@@ -4,7 +4,7 @@ import BaselineFeaturesDisplay from './BaselineFeaturesDisplay';
 import HighlightedHtmlDisplay from './HighlightedHtmlDisplay';
 import BaselineSummaryCard from './BaselineSummaryCard';
 import CodeViewer from './CodeViewer';
-import { ChevronDown, ChevronUp, Code2, FileText } from 'lucide-react';
+import { ChevronDown, ChevronUp, Code as Code2, FileText } from 'lucide-react';
 
 interface ScanResultsDisplayProps {
   result: ScanResult;
@@ -94,7 +94,7 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
               </p>
             </div>
             <CodeViewer 
-              code={result.cssContent || 'No CSS content found'} 
+              code={result.cssSnippet || 'No CSS content found'} 
               language="css"
               className="max-h-96 overflow-y-auto"
             />
