@@ -10,51 +10,47 @@ interface BaselineFeaturesDisplayProps {
 function getStatusIcon(status: string) {
   switch (status) {
     case 'Widely available':
-      return <CheckCircle className="w-5 h-5 text-green-500" />;
+      return <CheckCircle className="w-6 h-6 text-[#001858]" />;
     case 'Newly available':
-      return <AlertCircle className="w-5 h-5 text-yellow-500" />;
+      return <AlertCircle className="w-6 h-6 text-[#001858]" />;
     case 'Limited availability':
-      return <XCircle className="w-5 h-5 text-red-500" />;
+      return <XCircle className="w-6 h-6 text-[#001858]" />;
     default:
-      return <Info className="w-5 h-5 text-gray-500" />;
+      return <Info className="w-6 h-6 text-[#001858]" />;
   }
 }
 
 function getStatusColor(status: string) {
   switch (status) {
     case 'Widely available':
-      return 'bg-green-50 text-green-800 border-green-200';
+      return 'bg-[#d4f4dd] border-[#00e0b0]';
     case 'Newly available':
-      return 'bg-yellow-50 text-yellow-800 border-yellow-200';
+      return 'bg-[#fff9db] border-[#ffd803]';
     case 'Limited availability':
-      return 'bg-red-50 text-red-800 border-red-200';
+      return 'bg-[#ffe5eb] border-[#ff5470]';
     default:
-      return 'bg-gray-50 text-gray-800 border-gray-200';
+      return 'bg-white border-[#001858]';
   }
 }
 
 function getFilterButtonStyle(status: string, selectedFilter: string) {
   const isSelected = selectedFilter === status;
   
+  if (isSelected) {
+    return 'bg-[#001858] text-white';
+  }
+  
   switch (status) {
     case 'Widely available':
-      return isSelected 
-        ? 'bg-green-100 text-green-800 border-green-300' 
-        : 'bg-white text-green-700 border-green-200 hover:bg-green-50';
+      return 'bg-[#d4f4dd] text-[#001858]';
     case 'Newly available':
-      return isSelected 
-        ? 'bg-yellow-100 text-yellow-800 border-yellow-300' 
-        : 'bg-white text-yellow-700 border-yellow-200 hover:bg-yellow-50';
+      return 'bg-[#fff9db] text-[#001858]';
     case 'Limited availability':
-      return isSelected 
-        ? 'bg-red-100 text-red-800 border-red-300' 
-        : 'bg-white text-red-700 border-red-200 hover:bg-red-50';
+      return 'bg-[#ffe5eb] text-[#001858]';
     case 'all':
-      return isSelected 
-        ? 'bg-indigo-100 text-indigo-800 border-indigo-300' 
-        : 'bg-white text-indigo-700 border-indigo-200 hover:bg-indigo-50';
+      return 'bg-white text-[#001858]';
     default:
-      return 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50';
+      return 'bg-white text-[#001858]';
   }
 }
 
@@ -77,7 +73,7 @@ const STATUS_EXPLANATIONS = {
   }
 };
 
-// Tooltip component for status explanations
+// Tooltip component for status explanations - Neobrutalism style
 function StatusTooltip({ status, children }: { status: string; children: React.ReactNode }) {
   const [showTooltip, setShowTooltip] = useState(false);
   const explanation = STATUS_EXPLANATIONS[status as keyof typeof STATUS_EXPLANATIONS];
@@ -94,11 +90,11 @@ function StatusTooltip({ status, children }: { status: string; children: React.R
         {children}
       </div>
       {showTooltip && (
-        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg">
-          <div className="font-semibold mb-1">{explanation.title}</div>
-          <div className="mb-2 opacity-90">{explanation.description}</div>
-          <div className="font-medium text-yellow-300">{explanation.recommendation}</div>
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 p-4 bg-[#001858] text-white text-xs border-4 border-[#001858] shadow-[4px_4px_0px_rgba(0,24,88,0.3)]">
+          <div className="font-black mb-2 uppercase">{explanation.title}</div>
+          <div className="mb-2 font-bold">{explanation.description}</div>
+          <div className="font-black text-[#ffd803]">{explanation.recommendation}</div>
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#001858]"></div>
         </div>
       )}
     </div>
@@ -124,34 +120,34 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
 
   if (features.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-[#f3d2c1] border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-2xl font-black text-[#001858] uppercase">
             Detected Baseline Features
           </h3>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <div className="group relative">
-              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" />
-              <div className="absolute right-0 bottom-full mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-                <div className="font-semibold mb-2">Understanding Feature Status</div>
-                <div className="space-y-2">
-                  <div><span className="text-green-400">●</span> <strong>Widely Available:</strong> Safe for production use</div>
-                  <div><span className="text-yellow-400">●</span> <strong>Newly Available:</strong> Recently supported everywhere</div>
-                  <div><span className="text-red-400">●</span> <strong>Limited:</strong> Incomplete browser support</div>
+              <HelpCircle className="w-6 h-6 text-[#001858] cursor-help hover:scale-110 transition-transform" />
+              <div className="absolute right-0 bottom-full mb-2 w-72 p-4 bg-[#001858] text-white text-xs border-4 border-[#001858] shadow-[4px_4px_0px_rgba(0,24,88,0.3)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                <div className="font-black mb-3 uppercase">Understanding Feature Status</div>
+                <div className="space-y-2 font-bold">
+                  <div><span className="text-[#00e0b0]">●</span> <strong>Widely Available:</strong> Safe for production use</div>
+                  <div><span className="text-[#ffd803]">●</span> <strong>Newly Available:</strong> Recently supported everywhere</div>
+                  <div><span className="text-[#ff5470]">●</span> <strong>Limited:</strong> Incomplete browser support</div>
                 </div>
-                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                <div className="absolute top-full right-4 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#001858]"></div>
               </div>
             </div>
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="neo-brutalism-button px-4 py-2 bg-[#8bd3dd] text-[#001858] text-sm"
             >
-              {isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+              {isCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
             </button>
           </div>
         </div>
         {!isCollapsed && (
-          <p className="text-gray-600 mt-4">No recognized web platform features detected.</p>
+          <p className="text-[#001858] font-bold mt-4">No recognized web platform features detected.</p>
         )}
       </div>
     );
@@ -206,39 +202,45 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
       {/* Header with Collapse Button */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center justify-between w-full">
-          <h3 className="text-lg font-semibold text-gray-800">
-            Detected Baseline Features ({features.length})
-          </h3>
           <div className="flex items-center gap-4">
-            <div className="flex gap-4 text-sm">
+            <Info className="w-8 h-8 text-[#001858]" />
+            <h3 className="text-2xl font-black text-[#001858] uppercase">
+              Detected Features
+            </h3>
+            <div className="bg-[#ffd803] border-3 border-[#001858] px-4 py-2 shadow-[3px_3px_0px_#001858]">
+              <span className="text-[#001858] font-black">{features.length}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex gap-3 text-sm">
               {Object.entries(statusCounts).map(([status, count]) => (
-                <div key={status} className="flex items-center gap-1">
+                <div key={status} className="flex items-center gap-2 bg-[#fef6e4] border-2 border-[#001858] px-3 py-1 shadow-[2px_2px_0px_#001858]">
                   {getStatusIcon(status)}
-                  <span className="text-gray-600">{count}</span>
+                  <span className="text-[#001858] font-black">{count}</span>
                 </div>
               ))}
             </div>
             <div className="group relative">
-              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" />
-              <div className="absolute right-0 bottom-full mb-2 w-80 p-4 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-                <div className="font-semibold mb-3">Baseline Feature Categories</div>
-                <div className="space-y-2">
-                  <div><span className="text-green-400">●</span> <strong>Widely Available:</strong> Supported everywhere for 2.5+ years. Safe to use without fallbacks.</div>
-                  <div><span className="text-yellow-400">●</span> <strong>Newly Available:</strong> Recently achieved cross-browser support. Generally safe but consider your audience.</div>
-                  <div><span className="text-red-400">●</span> <strong>Limited Availability:</strong> Incomplete browser support. Use progressive enhancement or polyfills.</div>
+              <HelpCircle className="w-6 h-6 text-[#001858] cursor-help hover:scale-110 transition-transform" />
+              <div className="absolute right-0 bottom-full mb-2 w-80 p-4 bg-[#001858] text-white text-xs border-4 border-[#001858] shadow-[4px_4px_0px_rgba(0,24,88,0.3)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                <div className="font-black mb-3 uppercase">Baseline Feature Categories</div>
+                <div className="space-y-2 font-bold">
+                  <div><span className="text-[#00e0b0]">●</span> <strong>Widely Available:</strong> Supported everywhere for 2.5+ years. Safe to use without fallbacks.</div>
+                  <div><span className="text-[#ffd803]">●</span> <strong>Newly Available:</strong> Recently achieved cross-browser support. Generally safe but consider your audience.</div>
+                  <div><span className="text-[#ff5470]">●</span> <strong>Limited Availability:</strong> Incomplete browser support. Use progressive enhancement or polyfills.</div>
                 </div>
-                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                <div className="absolute top-full right-4 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#001858]"></div>
               </div>
             </div>
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="neo-brutalism-button px-4 py-2 bg-[#8bd3dd] text-[#001858] text-sm"
             >
-              {isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+              {isCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -251,29 +253,29 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
           <div className="mb-6 space-y-4">
             {/* Search Input */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#001858]" />
               <input
                 type="text"
-                placeholder="Search features by name or description..."
+                placeholder="SEARCH FEATURES..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-700"
+                className="neo-brutalism-input w-full pl-12 pr-4 py-4 bg-[#fef6e4] text-[#001858] font-bold placeholder:text-[#001858] placeholder:opacity-50 uppercase"
               />
             </div>
 
             {/* Status Filter Buttons */}
-            <div className="flex flex-wrap gap-2">
-              <div className="flex items-center gap-2 mr-3">
-                <Filter className="w-4 h-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Filter by status:</span>
+            <div className="flex flex-wrap gap-3">
+              <div className="flex items-center gap-2">
+                <Filter className="w-5 h-5 text-[#001858]" />
+                <span className="text-sm font-black text-[#001858] uppercase">Filter:</span>
               </div>
               {filterOptions.map(({ key, label, count }) => (
                 <StatusTooltip key={key} status={key}>
                   <button
-                  onClick={() => setSelectedStatusFilter(key)}
-                  className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${getFilterButtonStyle(key, selectedStatusFilter)}`}
-                >
-                  {label} ({count})
+                    onClick={() => setSelectedStatusFilter(key)}
+                    className={`neo-brutalism-button px-4 py-2 text-sm font-black uppercase transition-all ${getFilterButtonStyle(key, selectedStatusFilter)}`}
+                  >
+                    {label} ({count})
                   </button>
                 </StatusTooltip>
               ))}
@@ -281,67 +283,69 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
           </div>
 
           {/* Results Summary */}
-          <div className="mb-4 text-sm text-gray-600">
-            Showing {filteredFeatures.length} of {features.length} features
-            {searchTerm && (
-              <span> matching &ldquo;{searchTerm}&rdquo;</span>
-            )}
-            {selectedStatusFilter !== 'all' && (
-              <span> with status &ldquo;{selectedStatusFilter}&rdquo;</span>
-            )}
+          <div className="mb-4 p-3 bg-[#f3d2c1] border-3 border-[#001858] shadow-[3px_3px_0px_#001858]">
+            <p className="text-sm text-[#001858] font-black uppercase">
+              Showing {filteredFeatures.length} of {features.length} features
+              {searchTerm && (
+                <span> matching &quot;{searchTerm}&quot;</span>
+              )}
+              {selectedStatusFilter !== 'all' && (
+                <span> with status &quot;{selectedStatusFilter}&quot;</span>
+              )}
+            </p>
           </div>
 
           {/* Features Display */}
           {filteredFeatures.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <Info className="w-8 h-8 mx-auto mb-2 opacity-50" />
-              <p>No features match your current filters.</p>
+            <div className="text-center py-12 bg-[#f3d2c1] border-4 border-[#001858] shadow-[4px_4px_0px_#001858]">
+              <Info className="w-12 h-12 mx-auto mb-4 text-[#001858]" />
+              <p className="text-[#001858] font-black text-lg uppercase mb-4">No features match your filters</p>
               <button
                 onClick={() => {
                   setSelectedStatusFilter('all');
                   setSearchTerm('');
                 }}
-                className="mt-2 text-indigo-600 hover:text-indigo-800 text-sm underline"
+                className="neo-brutalism-button px-6 py-3 bg-[#ffd803] text-[#001858] text-sm"
               >
-                Clear all filters
+                CLEAR ALL FILTERS
               </button>
             </div>
           ) : (
             <div className="space-y-6">
               {Object.entries(groupedFeatures).map(([category, categoryFeatures]) => (
                 <div key={category}>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                    {category}
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <h4 className="text-lg font-black text-[#001858] uppercase">{category}</h4>
+                    <span className="bg-[#8bd3dd] text-[#001858] font-black text-xs px-3 py-1 border-2 border-[#001858] shadow-[2px_2px_0px_#001858]">
                       {categoryFeatures.length}
                     </span>
-                  </h4>
-                  <div className="grid gap-2">
+                  </div>
+                  <div className="grid gap-3">
                     {categoryFeatures.map((feature, index) => (
                       <div
                         key={`${category}-${index}`}
-                        className={`p-3 rounded-lg border cursor-pointer hover:shadow-md transition-shadow ${getStatusColor(feature.status)}`}
+                        className={`p-4 border-4 shadow-[4px_4px_0px_#001858] cursor-pointer hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#001858] transition-all ${getStatusColor(feature.status)}`}
                         onClick={() => handleFeatureClick(feature)}
                       >
-                        <div className="flex items-start gap-3">
+                        <div className="flex items-start gap-4">
                           {getStatusIcon(feature.status)}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <h5 className="font-medium text-sm">{feature.name}</h5>
-                              <span className="text-xs px-2 py-1 rounded-full bg-white bg-opacity-50">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h5 className="font-black text-[#001858] uppercase text-base">{feature.name}</h5>
+                              <span className="text-xs px-3 py-1 bg-white border-2 border-[#001858] shadow-[2px_2px_0px_#001858] font-black uppercase">
                                 {feature.status}
                               </span>
                             </div>
                             {feature.description && (
-                              <p className="text-xs opacity-90 line-clamp-2 leading-relaxed">
+                              <p className="text-sm text-[#001858] font-bold line-clamp-2 leading-relaxed mb-2">
                                 {feature.description.replace(/<[^>]*>/g, '')}
                               </p>
                             )}
-                           {STATUS_EXPLANATIONS[feature.status as keyof typeof STATUS_EXPLANATIONS] && (
-                             <div className="mt-2 text-xs opacity-75">
-                               {STATUS_EXPLANATIONS[feature.status as keyof typeof STATUS_EXPLANATIONS].recommendation}
-                             </div>
-                           )}
+                            {STATUS_EXPLANATIONS[feature.status as keyof typeof STATUS_EXPLANATIONS] && (
+                              <div className="text-xs text-[#001858] font-black">
+                                {STATUS_EXPLANATIONS[feature.status as keyof typeof STATUS_EXPLANATIONS].recommendation}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

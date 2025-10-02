@@ -1,18 +1,19 @@
+import { AlertCircle } from 'lucide-react';
+
 interface ErrorMessageProps {
   error: string;
 }
 
 export default function ErrorMessage({ error }: ErrorMessageProps) {
   return (
-    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
-      <div className="flex items-center">
+    <div className="bg-[#ffe5eb] border-4 border-[#ff5470] shadow-[8px_8px_0px_#ff5470] p-6 mb-8">
+      <div className="flex items-center gap-4">
         <div className="flex-shrink-0">
-          <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-          </svg>
+          <AlertCircle className="w-12 h-12 text-[#001858]" />
         </div>
-        <div className="ml-3">
-          <p className="text-sm text-red-800">{error}</p>
+        <div>
+          <p className="text-lg font-black text-[#001858] uppercase mb-2">⚠ Error Occurred</p>
+          <p className="text-sm font-bold text-[#001858]">{error}</p>
         </div>
       </div>
     </div>

@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fef6e4;
+  --foreground: #001858;
+  --primary: #f582ae;
+  --secondary: #8bd3dd;
+  --accent: #f3d2c1;
+  --success: #00e0b0;
+  --warning: #ffd803;
+  --danger: #ff5470;
 }
 
 @theme inline {
@@ -22,12 +28,56 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Space Grotesk', 'Inter', Arial, sans-serif;
+  font-weight: 700;
+}
+
+/* Neobrutalism utility classes */
+.neo-brutalism-card {
+  border: 4px solid #001858;
+  box-shadow: 8px 8px 0px #001858;
+  transition: all 0.2s ease;
+}
+
+.neo-brutalism-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 12px 12px 0px #001858;
+}
+
+.neo-brutalism-button {
+  border: 3px solid #001858;
+  box-shadow: 4px 4px 0px #001858;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.1s ease;
+}
+
+.neo-brutalism-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #001858;
+}
+
+.neo-brutalism-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #001858;
+}
+
+.neo-brutalism-input {
+  border: 4px solid #001858;
+  box-shadow: 4px 4px 0px #001858;
+  font-weight: 600;
+}
+
+.neo-brutalism-input:focus {
+  outline: none;
+  box-shadow: 6px 6px 0px #001858;
+  transform: translate(-1px, -1px);
 }
 
 /* Starry Night Syntax Highlighting Styles */
 .starry-night {
-  color: #24292f;
+  color: #001858;
   background-color: transparent;
 }
 
@@ -47,7 +97,7 @@ body {
 
 .starry-night .pl-smi,
 .starry-night .pl-s .pl-s1 {
-  color: #24292f;
+  color: #001858;
 }
 
 .starry-night .pl-ent {
@@ -105,12 +155,12 @@ body {
 
 .starry-night .pl-mi {
   font-style: italic;
-  color: #24292f;
+  color: #001858;
 }
 
 .starry-night .pl-mb {
   font-weight: bold;
-  color: #24292f;
+  color: #001858;
 }
 
 .starry-night .pl-md {
@@ -151,80 +201,101 @@ body {
   color: #0a3069;
 }
 
-/* Baseline Feature Highlighting */
+/* Baseline Feature Highlighting - Neobrutalism style */
 .highlight-widely-available {
-  background-color: rgba(34, 197, 94, 0.1) !important;
-  border: 2px solid rgba(34, 197, 94, 0.3) !important;
-  border-radius: 4px !important;
+  background-color: #d4f4dd !important;
+  border: 4px solid #00e0b0 !important;
+  box-shadow: 4px 4px 0px #00e0b0 !important;
   position: relative !important;
+  padding: 8px !important;
+  margin: 8px 0 !important;
 }
 
 .highlight-newly-available {
-  background-color: rgba(234, 179, 8, 0.1) !important;
-  border: 2px solid rgba(234, 179, 8, 0.3) !important;
-  border-radius: 4px !important;
+  background-color: #fff9db !important;
+  border: 4px solid #ffd803 !important;
+  box-shadow: 4px 4px 0px #ffd803 !important;
   position: relative !important;
+  padding: 8px !important;
+  margin: 8px 0 !important;
 }
 
 .highlight-limited-availability {
-  background-color: rgba(239, 68, 68, 0.1) !important;
-  border: 2px solid rgba(239, 68, 68, 0.3) !important;
-  border-radius: 4px !important;
+  background-color: #ffe5eb !important;
+  border: 4px solid #ff5470 !important;
+  box-shadow: 4px 4px 0px #ff5470 !important;
   position: relative !important;
+  padding: 8px !important;
+  margin: 8px 0 !important;
 }
 
 /* Baseline line highlighting for code view */
 .baseline-line-widely {
-  background-color: rgba(34, 197, 94, 0.15);
-  border-left: 3px solid rgba(34, 197, 94, 0.6);
+  background-color: #d4f4dd;
+  border-left: 6px solid #00e0b0;
+  box-shadow: 2px 0px 0px #00e0b0;
 }
 
 .baseline-line-newly {
-  background-color: rgba(234, 179, 8, 0.15);
-  border-left: 3px solid rgba(234, 179, 8, 0.6);
+  background-color: #fff9db;
+  border-left: 6px solid #ffd803;
+  box-shadow: 2px 0px 0px #ffd803;
 }
 
 .baseline-line-limited {
-  background-color: rgba(239, 68, 68, 0.15);
-  border-left: 3px solid rgba(239, 68, 68, 0.6);
+  background-color: #ffe5eb;
+  border-left: 6px solid #ff5470;
+  box-shadow: 2px 0px 0px #ff5470;
 }
 
-/* Add small status badges */
+/* Status badges - Neobrutalism style */
 .highlight-widely-available::before {
-  content: "✓ Widely Available";
+  content: "✓ WIDELY AVAILABLE";
   position: absolute;
-  top: -8px;
-  left: 4px;
-  background: rgba(34, 197, 94, 0.9);
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 3px;
+  top: -16px;
+  left: 8px;
+  background: #00e0b0;
+  color: #001858;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border: 3px solid #001858;
+  box-shadow: 3px 3px 0px #001858;
   z-index: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .highlight-newly-available::before {
-  content: "⚠ Newly Available";
+  content: "⚡ NEWLY AVAILABLE";
   position: absolute;
-  top: -8px;
-  left: 4px;
-  background: rgba(234, 179, 8, 0.9);
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 3px;
+  top: -16px;
+  left: 8px;
+  background: #ffd803;
+  color: #001858;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border: 3px solid #001858;
+  box-shadow: 3px 3px 0px #001858;
   z-index: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .highlight-limited-availability::before {
-  content: "⚠ Limited Availability";
+  content: "⚠ LIMITED AVAILABILITY";
   position: absolute;
-  top: -8px;
-  left: 4px;
-  background: rgba(239, 68, 68, 0.9);
+  top: -16px;
+  left: 8px;
+  background: #ff5470;
   color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border: 3px solid #001858;
+  box-shadow: 3px 3px 0px #001858;
   z-index: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

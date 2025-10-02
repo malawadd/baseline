@@ -9,12 +9,12 @@ interface ScanResultCardProps {
 
 export default function ScanResultCard({ icon: Icon, label, value, color }: ScanResultCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className={`${color} border-4 border-[#001858] shadow-[6px_6px_0px_#001858] p-6 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_#001858] transition-all`}>
       <div className="flex items-center">
-        <Icon className={`w-8 h-8 ${color}`} />
+        <Icon className="w-10 h-10 text-[#001858]" />
         <div className="ml-4">
-          <p className="text-sm font-medium text-gray-600">{label}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+          <p className="text-xs font-black text-[#001858] uppercase tracking-wide">{label}</p>
+          <p className="text-3xl font-black text-[#001858]">{value}</p>
         </div>
       </div>
     </div>

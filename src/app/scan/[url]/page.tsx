@@ -16,17 +16,21 @@ export default function ScanResultPage() {
   const { result, loading, error } = useScanData(decodedUrl);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen" style={{ background: '#fef6e4' }}>
+      <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-4">
-              <Globe className="w-12 h-12 text-indigo-600 mr-3" />
-              <h1 className="text-4xl font-bold text-gray-800">Scan Results</h1>
+          {/* Header - Matching Main Page */}
+          <div className="text-center mb-12">
+            <div className="inline-block mb-6 p-4 bg-[#8bd3dd] border-4 border-[#001858] shadow-[8px_8px_0px_#001858] transform hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_#001858] transition-all">
+              <div className="flex items-center justify-center">
+                <Globe className="w-16 h-16 text-[#001858] mr-4" />
+                <h1 className="text-5xl font-black text-[#001858] uppercase tracking-tight">
+                  Web Baseline<br/>Scanner
+                </h1>
+              </div>
             </div>
-            <p className="text-gray-600 text-lg">
-              Website analysis and scanning tool
+            <p className="text-[#001858] text-xl font-bold mb-2">
+              SCAN RESULTS
             </p>
           </div>
 
@@ -35,9 +39,9 @@ export default function ScanResultPage() {
           
           {/* Loading State */}
           {loading && (
-            <div className="flex justify-center items-center py-10">
-              <Loader2 className="w-8 h-8 animate-spin text-indigo-600 mr-3" />
-              <p className="text-xl text-gray-700">Scanning...</p>
+            <div className="flex justify-center items-center py-12 bg-white border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
+              <Loader2 className="w-12 h-12 animate-spin text-[#001858] mr-4" />
+              <p className="text-2xl text-[#001858] font-black uppercase">Scanning...</p>
             </div>
           )}
 
@@ -55,25 +59,25 @@ export default function ScanResultPage() {
                   icon={FileText}
                   label="HTML Size"
                   value={`${(result.htmlLength / 1024).toFixed(1)}KB`}
-                  color="text-blue-500"
+                  color="bg-[#8bd3dd]"
                 />
                 <ScanResultCard
                   icon={Palette}
                   label="CSS Size"
                   value={`${(result.cssLength / 1024).toFixed(1)}KB`}
-                  color="text-purple-500"
+                  color="bg-[#f582ae]"
                 />
                 <ScanResultCard
                   icon={Code}
                   label="Stylesheets"
                   value={result.stylesheets}
-                  color="text-green-500"
+                  color="bg-[#d4f4dd]"
                 />
                 <ScanResultCard
                   icon={FileText}
                   label="Inline Blocks"
                   value={result.inlineBlocks}
-                  color="text-orange-500"
+                  color="bg-[#fff9db]"
                 />
               </div>
 

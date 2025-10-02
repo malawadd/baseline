@@ -34,14 +34,14 @@ export default function UrlScanInput({ currentUrl, showCurrentUrl = false }: Url
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+    <div className="bg-[#f582ae] border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8 mb-8">
       {showCurrentUrl && currentUrl && (
-        <div className="mb-4 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+        <div className="mb-6 p-4 bg-[#8bd3dd] border-4 border-[#001858] shadow-[4px_4px_0px_#001858]">
           <div className="flex items-center gap-2 mb-2">
-            <Globe className="w-4 h-4 text-indigo-600" />
-            <span className="text-sm font-medium text-indigo-800">Currently analyzing:</span>
+            <Globe className="w-5 h-5 text-[#001858]" />
+            <span className="text-sm font-black text-[#001858] uppercase">Currently Analyzing:</span>
           </div>
-          <p className="text-indigo-700 break-all font-mono text-sm bg-white px-3 py-2 rounded border">
+          <p className="text-[#001858] break-all font-mono text-sm bg-[#fef6e4] px-4 py-3 border-3 border-[#001858] font-bold">
             {currentUrl}
           </p>
         </div>
@@ -49,8 +49,8 @@ export default function UrlScanInput({ currentUrl, showCurrentUrl = false }: Url
       
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1">
-          <label htmlFor="newUrl" className="block text-sm font-medium text-gray-700 mb-2">
-            {showCurrentUrl ? 'Scan a different website' : 'Website URL'}
+          <label htmlFor="newUrl" className="block text-sm font-black text-[#001858] mb-3 uppercase tracking-wide">
+            {showCurrentUrl ? '🔄 Scan Different Website' : '🌐 Website URL'}
           </label>
           <input
             id="newUrl"
@@ -58,8 +58,8 @@ export default function UrlScanInput({ currentUrl, showCurrentUrl = false }: Url
             value={newUrl}
             onChange={(e) => setNewUrl(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Enter website URL (e.g., https://example.com)"
-            className="text-gray-700 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors"
+            placeholder="https://example.com"
+            className="neo-brutalism-input text-[#001858] w-full px-4 py-4 bg-[#fef6e4] font-bold text-lg placeholder:text-[#001858] placeholder:opacity-50"
             disabled={loading}
           />
         </div>
@@ -67,24 +67,24 @@ export default function UrlScanInput({ currentUrl, showCurrentUrl = false }: Url
           <button
             onClick={handleScan}
             disabled={loading || !newUrl.trim()}
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 min-w-[120px] justify-center"
+            className="neo-brutalism-button px-8 py-4 bg-[#ffd803] text-[#001858] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3 min-w-[160px] justify-center text-lg"
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Scanning...
+                <Loader2 className="w-5 h-5 animate-spin" />
+                SCANNING...
               </>
             ) : (
               <>
                 {showCurrentUrl ? (
                   <>
-                    <ArrowRight className="w-4 h-4" />
-                    Scan New
+                    <ArrowRight className="w-5 h-5" />
+                    SCAN NEW
                   </>
                 ) : (
                   <>
-                    <Globe className="w-4 h-4" />
-                    Scan
+                    <Globe className="w-5 h-5" />
+                    SCAN
                   </>
                 )}
               </>

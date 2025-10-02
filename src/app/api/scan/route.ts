@@ -34,11 +34,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Fetch the target page with a compatible timeout
+    // Fetch the target page with a longer timeout
     let response;
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout for main page
       
       response = await fetch(targetUrl.toString(), {
         headers: {
@@ -94,11 +94,15 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // Extract linked stylesheets
+    // Extract linked stylesheets (limit to first 10 to avoid timeouts)
     const linkedStylesheets: string[] = [];
     const stylesheetPromises: Promise<string>[] = [];
+    const MAX_STYLESHEETS = 10;
+    let stylesheetCount = 0;
 
     $('link[rel="stylesheet"]').each((_, element) => {
+      if (stylesheetCount >= MAX_STYLESHEETS) return;
+      
       const href = $(element).attr('href');
       if (href) {
         try {
@@ -108,9 +112,11 @@ export async function GET(request: NextRequest) {
           // Only fetch same-origin stylesheets or those with CORS headers
           if (stylesheetUrl.origin === targetUrl.origin) {
             stylesheetPromises.push(fetchStylesheet(stylesheetUrl.toString()));
+            stylesheetCount++;
           } else {
             // Try to fetch cross-origin stylesheets (they might have CORS=*)
             stylesheetPromises.push(fetchStylesheet(stylesheetUrl.toString(), true));
+            stylesheetCount++;
           }
         } catch (error) {
           console.warn('Invalid stylesheet URL:', href, error);

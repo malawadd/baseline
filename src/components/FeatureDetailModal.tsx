@@ -10,26 +10,26 @@ interface FeatureDetailModalProps {
 function getStatusIcon(status: string) {
   switch (status) {
     case 'Widely available':
-      return <CheckCircle className="w-6 h-6 text-green-500" />;
+      return <CheckCircle className="w-8 h-8 text-[#001858]" />;
     case 'Newly available':
-      return <AlertCircle className="w-6 h-6 text-yellow-500" />;
+      return <AlertCircle className="w-8 h-8 text-[#001858]" />;
     case 'Limited availability':
-      return <XCircle className="w-6 h-6 text-red-500" />;
+      return <XCircle className="w-8 h-8 text-[#001858]" />;
     default:
-      return <Info className="w-6 h-6 text-gray-500" />;
+      return <Info className="w-8 h-8 text-[#001858]" />;
   }
 }
 
 function getStatusColor(status: string) {
   switch (status) {
     case 'Widely available':
-      return 'bg-green-50 text-green-800 border-green-200';
+      return 'bg-[#d4f4dd] text-[#001858] border-[#00e0b0]';
     case 'Newly available':
-      return 'bg-yellow-50 text-yellow-800 border-yellow-200';
+      return 'bg-[#fff9db] text-[#001858] border-[#ffd803]';
     case 'Limited availability':
-      return 'bg-red-50 text-red-800 border-red-200';
+      return 'bg-[#ffe5eb] text-[#001858] border-[#ff5470]';
     default:
-      return 'bg-gray-50 text-gray-800 border-gray-200';
+      return 'bg-white text-[#001858] border-[#001858]';
   }
 }
 
@@ -80,9 +80,6 @@ function getImplementationGuidance(status: string) {
 function generateDocumentationLinks(feature: BaselineFeature) {
   const links = [];
   
-  // Extract feature name for search
-  const featureName = feature.name.toLowerCase().replace(/\s+/g, '-');
-  
   // MDN Web Docs link
   links.push({
     title: 'MDN Web Docs',
@@ -123,24 +120,24 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
   const documentationLinks = generateDocumentationLinks(feature);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-[#001858] bg-opacity-80 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+      <div className="bg-[#fef6e4] border-4 border-[#001858] shadow-[12px_12px_0px_#001858] max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between p-6 border-b-4 border-[#001858] bg-white">
+          <div className="flex items-center gap-4">
             {getStatusIcon(feature.status)}
             <div>
-              <h2 className="text-xl font-bold text-gray-900">{feature.name}</h2>
-              <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(feature.status)}`}>
+              <h2 className="text-2xl font-black text-[#001858] uppercase mb-2">{feature.name}</h2>
+              <span className={`inline-block px-4 py-2 text-sm font-black uppercase border-4 shadow-[3px_3px_0px_#001858] ${getStatusColor(feature.status)}`}>
                 {feature.status}
               </span>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="neo-brutalism-button p-3 bg-[#ff5470] text-white hover:bg-[#ff5470]"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -149,8 +146,8 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
           {/* Description */}
           {feature.description && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-              <p className="text-gray-700 leading-relaxed">
+              <h3 className="text-lg font-black text-[#001858] mb-3 uppercase">Description</h3>
+              <p className="text-[#001858] leading-relaxed font-bold">
                 {feature.description.replace(/<[^>]*>/g, '')}
               </p>
             </div>
@@ -158,18 +155,18 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
 
           {/* Implementation Guidance */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Implementation Guidance</h3>
-            <div className={`p-4 rounded-lg border ${getStatusColor(feature.status)}`}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="font-semibold">{guidance.recommendation}</span>
+            <h3 className="text-lg font-black text-[#001858] mb-3 uppercase">Implementation Guidance</h3>
+            <div className={`p-5 border-4 shadow-[4px_4px_0px_#001858] ${getStatusColor(feature.status)}`}>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="font-black text-lg">{guidance.recommendation}</span>
               </div>
-              <p className="text-sm mb-3 opacity-90">{guidance.description}</p>
-              <div className="space-y-1">
-                <p className="text-sm font-medium opacity-90">Key considerations:</p>
-                <ul className="text-sm space-y-1 opacity-80">
+              <p className="text-sm mb-4 font-bold">{guidance.description}</p>
+              <div className="space-y-2">
+                <p className="text-sm font-black uppercase">Key considerations:</p>
+                <ul className="text-sm space-y-2 font-bold">
                   {guidance.considerations.map((consideration, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <span className="w-1 h-1 bg-current rounded-full"></span>
+                    <li key={index} className="flex items-start gap-2">
+                      <span className="w-2 h-2 bg-[#001858] mt-1.5 flex-shrink-0"></span>
                       {consideration}
                     </li>
                   ))}
@@ -181,8 +178,8 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
           {/* Selector Information */}
           {feature.selector && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">CSS Selector</h3>
-              <code className="block bg-gray-100 p-3 rounded-lg text-sm font-mono text-gray-800">
+              <h3 className="text-lg font-black text-[#001858] mb-3 uppercase">CSS Selector</h3>
+              <code className="block bg-white border-4 border-[#001858] shadow-[4px_4px_0px_#001858] p-4 text-sm font-mono font-black text-[#001858]">
                 {feature.selector}
               </code>
             </div>
@@ -190,7 +187,7 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
 
           {/* Documentation Links */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Learn More</h3>
+            <h3 className="text-lg font-black text-[#001858] mb-3 uppercase">Learn More</h3>
             <div className="grid gap-3">
               {documentationLinks.map((link, index) => (
                 <a
@@ -198,29 +195,29 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-indigo-300 hover:bg-indigo-50 transition-colors group"
+                  className="flex items-center justify-between p-4 border-4 border-[#001858] bg-white shadow-[4px_4px_0px_#001858] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#001858] transition-all group"
                 >
                   <div>
-                    <div className="font-medium text-gray-900 group-hover:text-indigo-900">
+                    <div className="font-black text-[#001858] uppercase mb-1">
                       {link.title}
                     </div>
-                    <div className="text-sm text-gray-600 group-hover:text-indigo-700">
+                    <div className="text-sm text-[#001858] font-bold">
                       {link.description}
                     </div>
                   </div>
-                  <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-indigo-600" />
+                  <ExternalLink className="w-5 h-5 text-[#001858]" />
                 </a>
               ))}
             </div>
           </div>
 
           {/* Baseline Information */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-start gap-2">
-              <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <div className="text-sm text-blue-800">
-                <p className="font-medium mb-1">About Web Platform Baseline</p>
-                <p className="opacity-90">
+          <div className="bg-[#8bd3dd] border-4 border-[#001858] shadow-[4px_4px_0px_#001858] p-5">
+            <div className="flex items-start gap-3">
+              <Info className="w-6 h-6 text-[#001858] mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-[#001858]">
+                <p className="font-black mb-2 uppercase">About Web Platform Baseline</p>
+                <p className="font-bold mb-3">
                   Baseline represents web features that are interoperable across all major evergreen browsers. 
                   Features marked as &quot;Widely available&quot; have been supported for at least 2.5 years, while 
                   &quot;Newly available&quot; features have recently achieved cross-browser support.
@@ -229,10 +226,10 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
                   href="https://web.dev/baseline" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 mt-2 text-blue-600 hover:text-blue-800 underline"
+                  className="inline-flex items-center gap-2 text-[#001858] font-black underline hover:translate-x-1 transition-transform uppercase text-xs"
                 >
-                  Learn more about Baseline
-                  <ExternalLink className="w-3 h-3" />
+                  Learn more about Baseline →
+                  <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -240,12 +237,12 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end p-6 border-t border-gray-200">
+        <div className="flex justify-end p-6 border-t-4 border-[#001858] bg-white">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="neo-brutalism-button px-8 py-4 bg-[#ffd803] text-[#001858] text-lg"
           >
-            Close
+            CLOSE
           </button>
         </div>
       </div>

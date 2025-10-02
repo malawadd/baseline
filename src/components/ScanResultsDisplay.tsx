@@ -28,46 +28,47 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
       <HighlightedHtmlDisplay 
         highlightedHtmlContent={result.highlightedHtmlContent}
         originalSnippet={result.snippet}
+        cssContent={result.cssContent}
       />
 
       {/* Full HTML Source Code */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-800">Complete HTML Source</h3>
-            <span className="text-sm text-gray-500">
-              ({(result.htmlLength / 1024).toFixed(1)}KB)
+      <div className="bg-white border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <FileText className="w-8 h-8 text-[#001858]" />
+            <h3 className="text-2xl font-black text-[#001858] uppercase">Complete HTML Source</h3>
+            <span className="bg-[#8bd3dd] border-3 border-[#001858] px-3 py-1 shadow-[2px_2px_0px_#001858] text-sm font-black text-[#001858]">
+              {(result.htmlLength / 1024).toFixed(1)}KB
             </span>
           </div>
           <button
             onClick={() => setIsFullHtmlCollapsed(!isFullHtmlCollapsed)}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="neo-brutalism-button flex items-center gap-2 px-5 py-3 bg-[#ffd803] text-[#001858] text-sm"
           >
-            {isFullHtmlCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-            {isFullHtmlCollapsed ? 'Show' : 'Hide'}
+            {isFullHtmlCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            {isFullHtmlCollapsed ? 'SHOW' : 'HIDE'}
           </button>
         </div>
         {!isFullHtmlCollapsed && (
-          <div className="space-y-3">
-            <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="font-medium text-blue-800 mb-1">📋 Full HTML Source with Baseline Annotations</p>
-              <p className="text-blue-700 mb-2">
+          <div className="space-y-4">
+            <div className="text-sm text-[#001858] bg-[#d4f4dd] border-4 border-[#001858] shadow-[4px_4px_0px_#001858] p-4">
+              <p className="font-black mb-2 uppercase">📋 Full HTML Source with Baseline Annotations</p>
+              <p className="font-bold mb-3">
                 This view shows the complete HTML source code with syntax highlighting.
                 Lines containing baseline features are annotated with colored backgrounds:
               </p>
-              <div className="space-y-1 text-xs">
+              <div className="space-y-2 text-xs font-bold">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">✓</span>
-                  <span><strong>Green highlight</strong> - Widely available features (safe to use)</span>
+                  <span className="font-black text-lg">✓</span>
+                  <span><strong className="font-black">GREEN</strong> - Widely available features (safe to use)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">⚡</span>
-                  <span><strong>Yellow highlight</strong> - Newly available features (recently standardized)</span>
+                  <span className="font-black text-lg">⚡</span>
+                  <span><strong className="font-black">YELLOW</strong> - Newly available features (recently standardized)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">⚠</span>
-                  <span><strong>Red highlight</strong> - Limited availability (use with caution)</span>
+                  <span className="font-black text-lg">⚠</span>
+                  <span><strong className="font-black">RED</strong> - Limited availability (use with caution)</span>
                 </div>
               </div>
             </div>
@@ -83,43 +84,43 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
       </div>
 
       {/* Full CSS Source Code */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Code2 className="w-5 h-5 text-purple-600" />
-            <h3 className="text-lg font-semibold text-gray-800">Complete CSS Source</h3>
-            <span className="text-sm text-gray-500">
-              ({(result.cssLength / 1024).toFixed(1)}KB)
+      <div className="bg-white border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <Code2 className="w-8 h-8 text-[#001858]" />
+            <h3 className="text-2xl font-black text-[#001858] uppercase">Complete CSS Source</h3>
+            <span className="bg-[#f582ae] border-3 border-[#001858] px-3 py-1 shadow-[2px_2px_0px_#001858] text-sm font-black text-[#001858]">
+              {(result.cssLength / 1024).toFixed(1)}KB
             </span>
           </div>
           <button
             onClick={() => setIsFullCssCollapsed(!isFullCssCollapsed)}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="neo-brutalism-button flex items-center gap-2 px-5 py-3 bg-[#ffd803] text-[#001858] text-sm"
           >
-            {isFullCssCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-            {isFullCssCollapsed ? 'Show' : 'Hide'}
+            {isFullCssCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            {isFullCssCollapsed ? 'SHOW' : 'HIDE'}
           </button>
         </div>
         {!isFullCssCollapsed && (
-          <div className="space-y-3">
-            <div className="text-sm text-gray-600 bg-purple-50 border border-purple-200 rounded-lg p-3">
-              <p className="font-medium text-purple-800 mb-1">🎨 Complete CSS Source with Baseline Annotations</p>
-              <p className="text-purple-700 mb-2">
+          <div className="space-y-4">
+            <div className="text-sm text-[#001858] bg-[#fff9db] border-4 border-[#001858] shadow-[4px_4px_0px_#001858] p-4">
+              <p className="font-black mb-2 uppercase">🎨 Complete CSS Source with Baseline Annotations</p>
+              <p className="font-bold mb-3">
                 This view shows all CSS content found on the page, including both inline styles and external stylesheets.
                 Lines containing modern CSS features are annotated with colored backgrounds indicating their baseline status.
               </p>
-              <div className="space-y-1 text-xs">
+              <div className="space-y-2 text-xs font-bold">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">✓</span>
-                  <span><strong>Green highlight</strong> - Widely available CSS features</span>
+                  <span className="font-black text-lg">✓</span>
+                  <span><strong className="font-black">GREEN</strong> - Widely available CSS features</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">⚡</span>
-                  <span><strong>Yellow highlight</strong> - Newly available CSS features</span>
+                  <span className="font-black text-lg">⚡</span>
+                  <span><strong className="font-black">YELLOW</strong> - Newly available CSS features</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">⚠</span>
-                  <span><strong>Red highlight</strong> - Limited availability CSS features</span>
+                  <span className="font-black text-lg">⚠</span>
+                  <span><strong className="font-black">RED</strong> - Limited availability CSS features</span>
                 </div>
               </div>
             </div>
@@ -134,37 +135,39 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
       </div>
 
       {/* JSON Output */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Scan Results (JSON)</h3>
+      <div className="bg-white border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-black text-[#001858] uppercase">Scan Results (JSON)</h3>
           <button
             onClick={() => setIsJsonCollapsed(!isJsonCollapsed)}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="neo-brutalism-button flex items-center gap-2 px-5 py-3 bg-[#8bd3dd] text-[#001858] text-sm"
           >
-            {isJsonCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            {isJsonCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            {isJsonCollapsed ? 'SHOW' : 'HIDE'}
           </button>
         </div>
         {!isJsonCollapsed && (
-          <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm text-red-700">
+          <pre className="bg-[#fef6e4] border-4 border-[#001858] shadow-[4px_4px_0px_#001858] p-4 overflow-x-auto text-sm text-[#001858] font-mono font-bold">
             <code>{JSON.stringify(result, null, 2)}</code>
           </pre>
         )}
       </div>
 
       {/* CSS Snippet (Legacy - keeping for backward compatibility) */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">CSS Preview (First 400 chars)</h3>
+      <div className="bg-white border-4 border-[#001858] shadow-[8px_8px_0px_#001858] p-8">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-black text-[#001858] uppercase">CSS Preview (First 400 chars)</h3>
           <button
             onClick={() => setIsCssCollapsed(!isCssCollapsed)}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="neo-brutalism-button flex items-center gap-2 px-5 py-3 bg-[#f582ae] text-[#001858] text-sm"
           >
-            {isCssCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            {isCssCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            {isCssCollapsed ? 'SHOW' : 'HIDE'}
           </button>
         </div>
         {!isCssCollapsed && (
-          <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm">
-            <code className="text-purple-600">{result.cssSnippet || 'No CSS found'}</code>
+          <pre className="bg-[#fef6e4] border-4 border-[#001858] shadow-[4px_4px_0px_#001858] p-4 overflow-x-auto text-sm font-mono font-bold">
+            <code className="text-[#001858]">{result.cssSnippet || 'No CSS found'}</code>
           </pre>
         )}
       </div>
