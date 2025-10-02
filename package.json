@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
+    "postinstall": "mkdir -p node_modules/css-tree/data node_modules/css-tree/lib/data && cp patch.json node_modules/css-tree/data/patch.json && cp patch.json node_modules/css-tree/lib/data/patch.json",
     "lint": "eslint"
   },
   "dependencies": {
