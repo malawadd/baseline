@@ -41,21 +41,24 @@ export default function HighlightedHtmlDisplay({
           <div className="flex items-start gap-2">
             <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm text-blue-800">
-              <p className="font-medium mb-1">Baseline Feature Highlighting:</p>
+              <p className="font-medium mb-2">Baseline Feature Highlighting Guide:</p>
               <div className="space-y-1 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-200 border border-green-400 rounded"></div>
-                  <span>Widely Available - Safe to use</span>
+                  <span><strong>Widely Available</strong> - Safe to use without polyfills (2.5+ years of support)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-yellow-200 border border-yellow-400 rounded"></div>
-                  <span>Newly Available - Recently supported</span>
+                  <span><strong>Newly Available</strong> - Recently achieved cross-browser support</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-red-200 border border-red-400 rounded"></div>
-                  <span>Limited Availability - Use with caution</span>
+                  <span><strong>Limited Availability</strong> - Incomplete browser support, use progressive enhancement</span>
                 </div>
               </div>
+              <p className="mt-2 text-xs opacity-80">
+                Highlighted elements and styles use modern web features. Check individual feature details for implementation guidance.
+              </p>
             </div>
           </div>
         </div>

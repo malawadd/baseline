@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaselineFeature } from '@/types';
-import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, Info, Search, ListFilter as Filter, ChevronDown, ChevronUp } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Circle as XCircle, Info, Search, ListFilter as Filter, ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
 
 interface BaselineFeaturesDisplayProps {
   features: BaselineFeature[];
@@ -57,6 +57,53 @@ function getFilterButtonStyle(status: string, selectedFilter: string) {
   }
 }
 
+// Status explanations for tooltips
+const STATUS_EXPLANATIONS = {
+  'Widely available': {
+    title: 'Widely Available',
+    description: 'Supported in all major evergreen browsers for at least 2.5 years. Safe to use without polyfills or feature detection.',
+    recommendation: '✅ Safe to implement'
+  },
+  'Newly available': {
+    title: 'Newly Available', 
+    description: 'Recently achieved Baseline status across all major evergreen browsers. Generally safe to use but consider your audience.',
+    recommendation: '⚠️ Consider your users'
+  },
+  'Limited availability': {
+    title: 'Limited Availability',
+    description: 'Not yet supported across all major evergreen browsers. Use with caution and consider polyfills or progressive enhancement.',
+    recommendation: '🚨 Use with caution'
+  }
+};
+
+// Tooltip component for status explanations
+function StatusTooltip({ status, children }: { status: string; children: React.ReactNode }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const explanation = STATUS_EXPLANATIONS[status as keyof typeof STATUS_EXPLANATIONS];
+  
+  if (!explanation) return <>{children}</>;
+
+  return (
+    <div className="relative inline-block">
+      <div
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        className="cursor-help"
+      >
+        {children}
+      </div>
+      {showTooltip && (
+        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg">
+          <div className="font-semibold mb-1">{explanation.title}</div>
+          <div className="mb-2 opacity-90">{explanation.description}</div>
+          <div className="font-medium text-yellow-300">{explanation.recommendation}</div>
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDisplayProps) {
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -67,14 +114,28 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-800">
-            Web Platform Baseline Features
+            Detected Baseline Features
           </h3>
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-          >
-            {isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="group relative">
+              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" />
+              <div className="absolute right-0 bottom-full mb-2 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                <div className="font-semibold mb-2">Understanding Feature Status</div>
+                <div className="space-y-2">
+                  <div><span className="text-green-400">●</span> <strong>Widely Available:</strong> Safe for production use</div>
+                  <div><span className="text-yellow-400">●</span> <strong>Newly Available:</strong> Recently supported everywhere</div>
+                  <div><span className="text-red-400">●</span> <strong>Limited:</strong> Incomplete browser support</div>
+                </div>
+                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              {isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
         {!isCollapsed && (
           <p className="text-gray-600 mt-4">No recognized web platform features detected.</p>
@@ -137,7 +198,7 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center justify-between w-full">
           <h3 className="text-lg font-semibold text-gray-800">
-            Web Platform Baseline Features ({features.length})
+            Detected Baseline Features ({features.length})
           </h3>
           <div className="flex items-center gap-4">
             <div className="flex gap-4 text-sm">
@@ -147,6 +208,18 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
                   <span className="text-gray-600">{count}</span>
                 </div>
               ))}
+            </div>
+            <div className="group relative">
+              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help" />
+              <div className="absolute right-0 bottom-full mb-2 w-80 p-4 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                <div className="font-semibold mb-3">Baseline Feature Categories</div>
+                <div className="space-y-2">
+                  <div><span className="text-green-400">●</span> <strong>Widely Available:</strong> Supported everywhere for 2.5+ years. Safe to use without fallbacks.</div>
+                  <div><span className="text-yellow-400">●</span> <strong>Newly Available:</strong> Recently achieved cross-browser support. Generally safe but consider your audience.</div>
+                  <div><span className="text-red-400">●</span> <strong>Limited Availability:</strong> Incomplete browser support. Use progressive enhancement or polyfills.</div>
+                </div>
+                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+              </div>
             </div>
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
@@ -182,13 +255,14 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
                 <span className="text-sm font-medium text-gray-700">Filter by status:</span>
               </div>
               {filterOptions.map(({ key, label, count }) => (
-                <button
-                  key={key}
+                <StatusTooltip key={key} status={key}>
+                  <button
                   onClick={() => setSelectedStatusFilter(key)}
                   className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${getFilterButtonStyle(key, selectedStatusFilter)}`}
                 >
                   {label} ({count})
-                </button>
+                  </button>
+                </StatusTooltip>
               ))}
             </div>
           </div>
@@ -245,10 +319,15 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
                               </span>
                             </div>
                             {feature.description && (
-                              <p className="text-xs opacity-80 line-clamp-2">
+                              <p className="text-xs opacity-90 line-clamp-2 leading-relaxed">
                                 {feature.description.replace(/<[^>]*>/g, '')}
                               </p>
                             )}
+                           {STATUS_EXPLANATIONS[feature.status as keyof typeof STATUS_EXPLANATIONS] && (
+                             <div className="mt-2 text-xs opacity-75">
+                               {STATUS_EXPLANATIONS[feature.status as keyof typeof STATUS_EXPLANATIONS].recommendation}
+                             </div>
+                           )}
                           </div>
                         </div>
                       </div>
