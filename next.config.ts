@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     // Match the App Router API route
     "/app/api/scan": [
-      "./node_modules/css-tree/lib/data/**",
+      "./node_modules/css-tree/data/**",
       "./node_modules/css-tree/package.json",
     ],
   },
