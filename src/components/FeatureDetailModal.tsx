@@ -222,8 +222,8 @@ export default function FeatureDetailModal({ feature, isOpen, onClose }: Feature
                 <p className="font-medium mb-1">About Web Platform Baseline</p>
                 <p className="opacity-90">
                   Baseline represents web features that are interoperable across all major evergreen browsers. 
-                  Features marked as "Widely available" have been supported for at least 2.5 years, while 
-                  "Newly available" features have recently achieved cross-browser support.
+                  Features marked as &quot;Widely available&quot; have been supported for at least 2.5 years, while 
+                  &quot;Newly available&quot; features have recently achieved cross-browser support.
                 </p>
                 <a 
                   href="https://web.dev/baseline" 
