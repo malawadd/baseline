@@ -1,19 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config, { isServer }) => {
-    // Fix for css-tree module not found error in serverless
-    if (isServer) {
-      config.externals = config.externals || [];
-      config.externals.push({
-        'css-tree': 'commonjs css-tree'
-      });
-    }
-    return config;
+  // Remove the webpack externals hack – it prevents bundling the JSON files.
+  // Also, you usually don't need serverComponentsExternalPackages for this case.
+  outputFileTracingIncludes: {
+    // Match the App Router API route
+    "/api/scan": [
+      "./node_modules/css-tree/lib/data/**",
+      "./node_modules/css-tree/package.json",
+    ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['css-tree']
-  }
 };
 
 export default nextConfig;
