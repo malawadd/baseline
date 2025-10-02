@@ -51,16 +51,32 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
         {!isFullHtmlCollapsed && (
           <div className="space-y-3">
             <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="font-medium text-blue-800 mb-1">📋 Full HTML Source with Baseline Highlighting</p>
-              <p className="text-blue-700">
-                This view shows the complete HTML source code with Baseline features highlighted. 
-                Green borders indicate widely available features, yellow for newly available, and red for limited availability.
+              <p className="font-medium text-blue-800 mb-1">📋 Full HTML Source with Baseline Annotations</p>
+              <p className="text-blue-700 mb-2">
+                This view shows the complete HTML source code with syntax highlighting.
+                Lines containing baseline features are annotated with colored backgrounds:
               </p>
+              <div className="space-y-1 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">✓</span>
+                  <span><strong>Green highlight</strong> - Widely available features (safe to use)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">⚡</span>
+                  <span><strong>Yellow highlight</strong> - Newly available features (recently standardized)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">⚠</span>
+                  <span><strong>Red highlight</strong> - Limited availability (use with caution)</span>
+                </div>
+              </div>
             </div>
+            
             <CodeViewer 
-              code={result.highlightedHtmlContent} 
+              code={result.htmlContent || result.highlightedHtmlContent} 
               language="html"
               className="max-h-96 overflow-y-auto"
+              baselineFeatures={result.baselineFeatures}
             />
           </div>
         )}
@@ -87,16 +103,31 @@ export default function ScanResultsDisplay({ result }: ScanResultsDisplayProps) 
         {!isFullCssCollapsed && (
           <div className="space-y-3">
             <div className="text-sm text-gray-600 bg-purple-50 border border-purple-200 rounded-lg p-3">
-              <p className="font-medium text-purple-800 mb-1">🎨 Complete CSS Source</p>
-              <p className="text-purple-700">
-                This view shows all CSS content found on the page, including both inline styles and external stylesheets. 
-                Modern CSS features detected are highlighted in the Baseline Features section above.
+              <p className="font-medium text-purple-800 mb-1">🎨 Complete CSS Source with Baseline Annotations</p>
+              <p className="text-purple-700 mb-2">
+                This view shows all CSS content found on the page, including both inline styles and external stylesheets.
+                Lines containing modern CSS features are annotated with colored backgrounds indicating their baseline status.
               </p>
+              <div className="space-y-1 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">✓</span>
+                  <span><strong>Green highlight</strong> - Widely available CSS features</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">⚡</span>
+                  <span><strong>Yellow highlight</strong> - Newly available CSS features</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">⚠</span>
+                  <span><strong>Red highlight</strong> - Limited availability CSS features</span>
+                </div>
+              </div>
             </div>
             <CodeViewer 
-              code={result.cssSnippet || 'No CSS content found'} 
+              code={result.cssContent || result.cssSnippet || 'No CSS content found'} 
               language="css"
               className="max-h-96 overflow-y-auto"
+              baselineFeatures={result.baselineFeatures}
             />
           </div>
         )}

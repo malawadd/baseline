@@ -173,6 +173,22 @@ body {
   position: relative !important;
 }
 
+/* Baseline line highlighting for code view */
+.baseline-line-widely {
+  background-color: rgba(34, 197, 94, 0.15);
+  border-left: 3px solid rgba(34, 197, 94, 0.6);
+}
+
+.baseline-line-newly {
+  background-color: rgba(234, 179, 8, 0.15);
+  border-left: 3px solid rgba(234, 179, 8, 0.6);
+}
+
+.baseline-line-limited {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-left: 3px solid rgba(239, 68, 68, 0.6);
+}
+
 /* Add small status badges */
 .highlight-widely-available::before {
   content: "✓ Widely Available";

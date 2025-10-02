@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { createStarryNight } from '@wooorm/starry-night';
 import { toHtml } from 'hast-util-to-html';
+import { BaselineFeature } from '@/types';
 
 interface CodeViewerProps {
   code: string;
   language: 'html' | 'css';
   className?: string;
+  baselineFeatures?: BaselineFeature[];
 }
 
-export default function CodeViewer({ code, language, className = '' }: CodeViewerProps) {
+export default function CodeViewer({ code, language, className = '', baselineFeatures }: CodeViewerProps) {
   const [highlightedCode, setHighlightedCode] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
@@ -38,7 +40,12 @@ export default function CodeViewer({ code, language, className = '' }: CodeViewe
         const tree = starryNight.highlight(code, scope);
         
         // Convert to HTML string
-        const highlighted = toHtml(tree);
+        let highlighted = toHtml(tree);
+        
+        // If we have baseline features, annotate the code
+        if (baselineFeatures && baselineFeatures.length > 0) {
+          highlighted = annotateWithBaselineFeatures(highlighted, code, baselineFeatures);
+        }
         
         setHighlightedCode(highlighted);
       } catch (err) {
@@ -54,7 +61,7 @@ export default function CodeViewer({ code, language, className = '' }: CodeViewe
     if (code) {
       highlightCode();
     }
-  }, [code, language]);
+  }, [code, language, baselineFeatures]);
 
   if (isLoading) {
     return (
@@ -88,4 +95,69 @@ export default function CodeViewer({ code, language, className = '' }: CodeViewe
       </pre>
     </div>
   );
+}
+
+// Helper function to annotate code with baseline feature indicators
+function annotateWithBaselineFeatures(
+  highlightedHtml: string, 
+  originalCode: string, 
+  features: BaselineFeature[]
+): string {
+  // Split the code into lines for line-by-line annotation
+  const lines = originalCode.split('\n');
+  const highlightedLines = highlightedHtml.split('\n');
+  
+  // Map to track which lines contain which features
+  const lineFeatures = new Map<number, BaselineFeature[]>();
+  
+  // Find features in the code
+  features.forEach(feature => {
+    if (feature.selector || feature.name) {
+      const searchTerm = feature.selector || feature.name.toLowerCase().replace(/\s+/g, '-');
+      
+      lines.forEach((line, index) => {
+        if (line.toLowerCase().includes(searchTerm)) {
+          if (!lineFeatures.has(index)) {
+            lineFeatures.set(index, []);
+          }
+          lineFeatures.get(index)!.push(feature);
+        }
+      });
+    }
+  });
+  
+  // Add annotations to lines with features
+  const annotatedLines = highlightedLines.map((line, index) => {
+    const featuresOnLine = lineFeatures.get(index);
+    
+    if (featuresOnLine && featuresOnLine.length > 0) {
+      // Determine the most significant baseline status
+      const status = featuresOnLine.some(f => f.status === 'Limited availability') 
+        ? 'limited' 
+        : featuresOnLine.some(f => f.status === 'Newly available')
+        ? 'newly'
+        : 'widely';
+      
+      const bgClass = status === 'widely' 
+        ? 'baseline-line-widely' 
+        : status === 'newly'
+        ? 'baseline-line-newly'
+        : 'baseline-line-limited';
+      
+      const indicator = status === 'widely' 
+        ? '✓' 
+        : status === 'newly'
+        ? '⚡'
+        : '⚠';
+      
+      return `<div class="${bgClass}" style="display: flex; align-items: center; padding: 2px 4px; margin: 1px 0; border-radius: 2px;">
+        <span style="margin-right: 8px; font-weight: bold; opacity: 0.7;">${indicator}</span>
+        <span style="flex: 1;">${line}</span>
+      </div>`;
+    }
+    
+    return `<div style="padding: 2px 4px;">${line}</div>`;
+  });
+  
+  return annotatedLines.join('\n');
 }
