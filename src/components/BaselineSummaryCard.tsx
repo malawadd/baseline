@@ -43,7 +43,7 @@ export default function BaselineSummaryCard({ summary }: BaselineSummaryCardProp
       <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-800 mb-2">
           <strong>Web Platform Baseline</strong> represents web features that are interoperable 
-          across all major evergreen browsers. This analysis helps you understand your website's 
+          across all major evergreen browsers. This analysis helps you understand your website`&apos;`s 
           adoption of stable, widely-supported features.
         </p>
         <a 
