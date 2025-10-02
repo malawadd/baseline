@@ -5,7 +5,7 @@ import { fetchStylesheet } from '@/lib/utils';
 import { detectBaselineFeatures } from '@/lib/baselineDetector';
 import { highlightHtmlFeatures } from '@/lib/htmlHighlighter';
 import { computeBaselineSummary } from '@/lib/baselineSummary';
-import "@/lib/trace-hint"; 
+
 // Configure for Vercel serverless
 export const runtime = "nodejs";
 export const maxDuration = 60; // Maximum allowed on Pro plan, 10 on Hobby
