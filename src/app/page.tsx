@@ -32,7 +32,7 @@ export default function Home() {
           {/* Info Cards */}
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             <div className="bg-[#d4f4dd] border-4 border-[#001858] p-6 shadow-[6px_6px_0px_#001858]">
-              <div className="text-3xl mb-2">✓</div>
+              <div className="text-3xl mb-2 text-[#44f175]">✓</div>
               <h3 className="font-black text-[#001858] uppercase mb-2">Widely Available</h3>
               <p className="text-[#001858] font-semibold text-sm">Features supported for 2.5+ years across all major browsers</p>
             </div>
@@ -42,7 +42,7 @@ export default function Home() {
               <p className="text-[#001858] font-semibold text-sm">Recently achieved cross-browser support</p>
             </div>
             <div className="bg-[#ffe5eb] border-4 border-[#001858] p-6 shadow-[6px_6px_0px_#001858]">
-              <div className="text-3xl mb-2">⚠</div>
+              <div className="text-3xl mb-2 text-[#f03964]">⚠</div>
               <h3 className="font-black text-[#001858] uppercase mb-2">Limited Support</h3>
               <p className="text-[#001858] font-semibold text-sm">Incomplete browser support - use with caution</p>
             </div>

@@ -332,7 +332,7 @@ export default function BaselineFeaturesDisplay({ features }: BaselineFeaturesDi
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-2">
                               <h5 className="font-black text-[#001858] uppercase text-base">{feature.name}</h5>
-                              <span className="text-xs px-3 py-1 bg-white border-2 border-[#001858] shadow-[2px_2px_0px_#001858] font-black uppercase">
+                              <span className="text-xs px-3 py-1  border-2 border-[#001858] shadow-[2px_2px_0px_#001858] uppercase text-[#001858]">
                                 {feature.status}
                               </span>
                             </div>
